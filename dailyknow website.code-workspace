@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.dependency.syncWithFolderExplorer": false,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
+}

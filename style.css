@@ -1,0 +1,57 @@
+.page_wrapper {
+  width: 100%;
+
+  
+}
+
+body {
+  background: #f5f5f5;
+  font-family: "JetBrains Mono";
+ 
+}
+
+nav ul {
+  
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  font-size: 45px;
+  padding-inline-start: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid black;
+}
+
+nav li a {
+  text-decoration: none;
+
+
+}
+
+[href] {
+  color: black;
+
+  
+}
+
+img{
+  max-width: 35px;
+
+}
+
+.moto {
+background-color: blue;
+display: flex;
+width: 500px;
+margin-left: auto;
+margin-right: auto;
+margin
+}
+
+.moto-info {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
