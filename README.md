@@ -1,4 +1,5 @@
 🌐 DailyKnower
+
 Discover. Discuss. Dive Deep. 🚀
 Welcome to DailyKnower—a new platform where every day is a chance to learn something fresh and share insights! 🌱 Here, users gather to explore a new topic daily, dive into open discussions, and connect with a community that’s all about growth, knowledge, and free expression.
 
