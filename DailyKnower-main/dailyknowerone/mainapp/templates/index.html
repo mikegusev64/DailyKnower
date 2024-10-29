@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>DailyKnower</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" media="screen" href= "{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=JetBrains Mono" />
+  <script src="{% static 'js/script.js' %}"></script>
+</head>
+
+<body>
+  <header class="page_wrapper">
+    <nav>
+      <ul>
+        <li><a href="menu.html"><img src="{% static 'assets/svgs/menu-svgrepo-com.svg' %}" /></a></li>
+        <li><a href="index.html">DailyKnower</a></li>
+        <li>
+          <a href="createaccount.html"><img src="{% static 'assets/svgs/account-avatar-person-svgrepo-com.svg' %}" alt="avatar svg" /></a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="moto">
+      <div class="moto-info">
+        <h5>Daily Learning</h5>
+        <h5>Uncensored Discussions</h5>
+      </div>
+    </div>
+
+    <div class="daily_title">
+      <div class="title_info">
+        <h1><strong>Todays <br>Daily Knower Topic:</strong></h1>
+        <p>insert topic</p>
+      </div>
+      <div class="find_friends">
+        <p>Scroll here and <br> find your friends</p>
+        <div class="find_friends_info">
+          <ul>
+            <li>Account 1</li>
+            <li>Account 2</li>
+            <li>Account 3</li>
+            <li>Account 1</li>
+            <li>Account 2</li>
+            <li>Account 3</li>
+            <li>Account 1</li>
+            <li>Account 2</li>
+            <li>Account 3</li>
+            <li>Account 1</li>
+            <li>Account 2</li>
+            <li>Account 2</li>
+            <li>Account 1</li>
+            <li>Account 2</li>
+            <li>Account 3</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="resources_wrapper">
+      <div class="resources_boxes">
+        <div class="resource_box_one">
+          <div class="box_title">
+             <h4>Articles</h4>
+          </div>
+          <p class="box_expand"><a href="" class="open_full">open full</a></p>
+
+        </div>
+        <div class="resource_box_two">
+          <div class="box_title">
+             <h4>Videos</h4>
+          </div>
+          <p class="box_expand"><a href="" class="open_full">open full</a></p>
+        </div>
+
+        <div class="resource_box_three">
+          <div class="box_title">
+             <h4>Other...</h4>
+          </div>
+          <p class="box_expand"><a href="" class="open_full">open full</a></p>
+        </div>
+          
+        </div>
+          
+        </div>
+
+
+    <div class="discussion_button_wrapper">
+     <button type="button" class="discussion">I'm ready to discuss</button>
+    </div>
+ 
+
+</body>
+
+</html>
