@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div style="
+display: grid;
+grid-template-columns: 0.5fr 3fr 0.5fr;
+
+">
+
+
+<div class="topic-themes" style="display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightgray; box-shadow: inset 0 0 10px grey; border-radius: 20px; max-height: 20%; margin-top: 135px; width: 3200x;">
+    <h2><a href="{% url 'all-discussions' %}">All Themes</a></h2>
+    {% for theme in themes %}
+    <h3><a href="{% url 'all-discussions' %}?q={{theme.name}}">{{theme.name}}</a></h3>
+    {% endfor %}
+</div>
+
+
+<div class="all-dis-title" style="text-align: center;">
+    <h1>Discussion Archive</h1>
+
+    <div class="seach-wrapper">
+        <form class="search-form" method='GET' action="{% url 'feed' %}">
+              
+          <input class="search-form-input" type="search" name="q" placeholder="Search...">
+          <i class="fa fa-search"><img src="{% static 'assets/svgs/magnifying-glass-svgrepo-com.svg' %}" alt="avatar svg" style="max-width: 20px;" /></i>
+          
+        </form>
+      
+      </div>
+
+      <div class="dis-archive" style="display: flex; flex-direction: column; align-items: center;">
+        <div style="text-align: center; width: 500px; background-color: lightgray; box-shadow: inset 0 0 10px grey; border-radius: 20px; padding: 20px; width: 70%;">
+            {% for post in posts reversed %}
+                   <h3> <a href="{% url 'post' post.id %}">{{post.name}}</a> </h3>
+                   <h4>{{post.dkTopic}}</h4>
+                   <h4>{{post.created}}</h4>
+                   <h4>{{post.dkTopic.topicTheme}}</h4>
+                   <hr>
+            
+            {% endfor %}
+        </div>
+      </div>
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+{% endblock content %}

@@ -2,6 +2,9 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from decouple import config
+
+API_KEY = config("API_KEY")
 
 
 def main():

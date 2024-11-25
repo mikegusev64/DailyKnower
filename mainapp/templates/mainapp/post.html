@@ -1,0 +1,60 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+  
+{% block content %}
+
+<div class="feed-title">
+    <h1 class="post_topic">{{post.dkTopic}}</h1>
+</div>
+
+<hr>
+
+<div class="feed_page">
+    <div class="previous_dis">
+        <div class="previous_dis_info">
+          <h3>Previous Discussions</h3>
+          <a href="{% url 'feed' %}">Back To Today</a>
+            <hr>
+            {% for other_post in other_posts reversed %}
+          <ul>
+            <li><h5><a href="{% url 'post' other_post.id %}">{{other_post.name}}</a></h5>
+                <small>in <strong>{{other_post.dkTopic}}</strong></small> <br>
+                <small>{{other_post.created}}</small></li>
+           
+                {% endfor %}
+                
+          </ul>
+        </div>
+        <a href="{% url 'all-discussions' %}">view all -></a>
+      </div>
+      
+      <div class="post_title">
+        <h1>{{post.name}}</h1>
+        <small>{{post.created}}</small>
+    </div>
+
+    <div class="recent-updated" style="display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
+      <h2>User Activity:</h2>
+
+      <div class="search-by-topic" style="display:flex; flex-direction: column; align-items: center;">
+        <h3 style="text-align: center;">Search Conversations <br>by Topic:</h3>
+
+        <div class="topic-search-content" style="background-color: rgb(220,220,220); border: 1px solid black; width: 180px; height: 200px; display: flex; flex-direction: column; text-align: center; justify-content: center;">
+        {% for topic in topics %}
+        <a href="{% url 'feed' %}?q={{topic.name}}">{{topic.name}}</a>
+        {% endfor %}
+
+        </div>
+      </div>
+
+  
+
+    </div>
+
+
+
+
+
+{% endblock content %}

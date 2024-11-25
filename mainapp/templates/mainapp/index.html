@@ -1,0 +1,113 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="moto">
+
+      <div class="todays_date_wrapper">
+          <span id="datetime"></span>
+      
+          <script>
+            // create a function to update the date and time
+            function updateDateTime() {
+              // create a new `Date` object
+              const now = new Date();
+      
+              // get the current date and time as a string
+              const currentDateTime = now.toLocaleString();
+      
+              // update the `textContent` property of the `span` element with the `id` of `datetime`
+              document.querySelector('#datetime').textContent = currentDateTime;
+            }
+      
+            // call the `updateDateTime` function every second
+            setInterval(updateDateTime, 1000);
+          </script>
+      </div>
+
+      <div class="moto-info">
+        <h5>Daily Learning</h5>
+        <h5>Uncensored Discussions</h5>
+      </div>
+
+      <div class="feedback_button">
+        <form class="button_wrapper">
+          <button type="submit" class="discussion" style="width: 12rem;">Do NOT press</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="daily_title">
+      <div class="title_info">
+        <h1><strong>Todays <br>DailyKnower Topic:</strong></h1>
+
+        
+        {% for post in posts|slice:":1" %}
+        <div class="latest-post">
+          <h5><a style="text-decoration: none;" href="{% url 'post' post.id %}">{{post.name}}</a></h5>
+        </div>
+              
+        {% endfor %}
+  
+      </div>
+      <div class="find_friends">
+        <p>Scroll here and <br> find your friends</p>
+        <div class="find_friends_info">
+            
+            
+          <ul>
+            <li><h5>{{user.username}}</h5></li>
+          </ul>
+
+            
+        </div> 
+      </div>
+
+    </div>
+
+    <div class="resources_wrapper">
+      <div class="resources_boxes">
+        <div class="resource_box_one">
+          <div class="box_title">
+             <h4>Articles</h4>
+          </div>
+
+          <button popovertarget="myheader" popovertargetaction = "show" class="box-button-1">open full</button>
+          
+
+          <div popover id="myheader" style="width: 200px; height: 200px; text-align: center;">
+            <h1>Articles</h1>
+
+          </div>
+
+        </div>
+        <div class="resource_box_two">
+          <div class="box_title">
+             <h4>Videos</h4>
+          </div>
+          <button class="box-button-2">open full</button>
+          
+        </div>
+
+        <div class="resource_box_three">
+          <div class="box_title">
+             <h4>Other...</h4>
+          </div>
+          <button class="box-button-3">open full</button>
+        </div>
+          
+        </div>
+          
+        </div>
+
+    <form action="{% url 'feed' %}" class="discussion_button_wrapper">
+      <button type="submit" class="discussion">I'm ready to discuss</button>
+    </form>
+
+
+
+
+ 
+
+{% endblock content %}

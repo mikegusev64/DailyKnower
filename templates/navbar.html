@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>DailyKnower</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" media="screen" href= "{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=JetBrains Mono"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <script src="{% static 'js/script.js' %}"></script>
+</head> 
+
+<body>
+  <header class="page_wrapper">
+    <nav>
+      <ul>
+        <li><div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        
+          <a href="{% url 'all-discussions' %}">Previous <br>Discussions</a>
+          <a href="#">Log In</a>
+          <a href="#">Sign Up</a>
+          <div class="feedback_button">
+            <form class="button_wrapper">
+              <button type="submit" class="discussion" style="display: inline-block; width: 100px; height: 80px; margin-top: 60%;">Do NOT press</button>
+            </form>
+          </div>
+        </div>
+         
+        </div>
+        
+        <span style="cursor:pointer;" onclick="openNav()">&#9776;</span>
+        
+        <script>
+          function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+          }
+          
+          function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+          }
+          </script>
+        </li>
+        
+        <li><a href="{% url 'index' %}">DailyKnower</a></li>
+
+        <li>
+          <div id="myAccountSidenav" class="accountSidenav">
+            <a href="javascript:void(0)" class="closebtnAccount" onclick="closeAccountNav()">&times;</a>
+            <a href="#">Profile</a>
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+
+          </div>
+        
+          <span style="font-size:30px;cursor:pointer;" onclick="openAccountNav()"><img src="{% static 'assets/svgs/account-avatar-person-svgrepo-com.svg' %}" alt="avatar svg" /></span>
+          
+          <script>
+          function openAccountNav() {
+            document.getElementById("myAccountSidenav").style.width = "250px";
+          }
+          
+          function closeAccountNav() {
+            document.getElementById("myAccountSidenav").style.width = "0";
+          }
+          </script>
+        </li>
+
+
+      </ul>
+    </nav>
+  </header>
+
+
+</body>
+
+</html>
+
