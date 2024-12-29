@@ -8,6 +8,7 @@ import datetime
 class topicTheme(models.Model):
     name = models.CharField(max_length=255)
     
+    
     def __str__(self):
         return self.name
 
@@ -26,6 +27,7 @@ class adminPost(models.Model):
     description = models.TextField(blank=True)
     created = models.DateField(('Date'), default=datetime.datetime.now)
     created_at = models.DateTimeField(auto_now_add=True)
+    repliers = models.ManyToManyField(User, related_name='repliers', blank=True)
     
     def __str__(self):
         return self.name

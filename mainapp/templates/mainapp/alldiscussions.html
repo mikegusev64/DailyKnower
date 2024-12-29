@@ -2,41 +2,87 @@
 {% load static %}
 
 {% block content %}
+
+
+<style>
+.socials-bar{
+  position: fixed;
+  top: 50%;
+ left: -1%;
+
+
+
+
+}
+
+.socials-bar a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  transition: all 0.3s ease;
+  background-color: rgb(211,211,211);
+
+  font-size: 20px;
+
+  width: 35px;
+  height: 35px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow:0 0 10px grey;
+  opacity: 70%;
+  margin-bottom: 5px;
+}
+
+.socials-bar a:hover {
+  background-color: #606060;
+  margin-left: 10px;
+  opacity: 100%;
+
+}
+
+
+
+</style>
+
 <div style="
-display: grid;
-grid-template-columns: 0.5fr 3fr 0.5fr;
+display: flex;
+flex-direction: column;
 
 ">
 
 
-<div class="topic-themes" style="display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightgray; box-shadow: inset 0 0 10px grey; border-radius: 20px; max-height: 20%; margin-top: 135px; width: 3200x;">
-    <h2><a href="{% url 'all-discussions' %}">All Themes</a></h2>
+<div class="topic-themes" style="display: flex; flex-direction: column; justify-content: center; text-align: center; background-color:rgb(220, 220, 220); box-shadow: 0 0 15px grey; border-radius: 20px; justify-content: start; max-height: 150px; margin-top: 10px; width: 75%; margin-left: auto; margin-right: auto;">
+  <h2 style="margin-bottom: 0px;"> <a href="{% url 'all-discussions' %}">All Themes</a></h2>
+  <div style="display: flex; flex-direction: row; justify-content: center;">
     {% for theme in themes %}
-    <h3><a href="{% url 'all-discussions' %}?q={{theme.name}}">{{theme.name}}</a></h3>
+    <h3><a href="{% url 'all-discussions' %}?q={{theme.name}}" style="text-decoration: none; margin-right: 5px; font-size: 15px;">{{theme.name}} | </a></h3>
     {% endfor %}
+    </div>
 </div>
 
 
 <div class="all-dis-title" style="text-align: center;">
-    <h1>Discussion Archive</h1>
+    <h1 style="margin-bottom: 40px;">Discussion Archive</h1>
 
     <div class="seach-wrapper">
-        <form class="search-form" method='GET' action="{% url 'feed' %}">
+        <form class="search-form" method='GET' action="{% url 'all-discussions' %}">
               
-          <input class="search-form-input" type="search" name="q" placeholder="Search...">
+          <input class="search-form-input" type="search" name="q" placeholder="Search..." style="font-family: JetBrains Mono;">
           <i class="fa fa-search"><img src="{% static 'assets/svgs/magnifying-glass-svgrepo-com.svg' %}" alt="avatar svg" style="max-width: 20px;" /></i>
           
         </form>
       
       </div>
 
-      <div class="dis-archive" style="display: flex; flex-direction: column; align-items: center;">
-        <div style="text-align: center; width: 500px; background-color: lightgray; box-shadow: inset 0 0 10px grey; border-radius: 20px; padding: 20px; width: 70%;">
+      <div style="max-width: 60%; margin-left: auto; margin-right: auto;"><h5 style="align-items: start;">There are {{post_count}} debates in the archive.</h5></div>
+
+      <div class="dis-archive" style="display: flex; flex-direction: column; align-items: center; ">
+        <div class="all-dis-inner" style="text-align: center; width: 500px; background-color: rgb(220, 220, 220); box-shadow: 0 0 15px grey; border-radius: 20px; padding: 20px; width: 70%; overflow-y: scroll; height: 600px;">
             {% for post in posts reversed %}
                    <h3> <a href="{% url 'post' post.id %}">{{post.name}}</a> </h3>
                    <h4>{{post.dkTopic}}</h4>
                    <h4>{{post.created}}</h4>
-                   <h4>{{post.dkTopic.topicTheme}}</h4>
+                   <h4>in {{post.dkTopic.topicTheme}}</h4>
                    <hr>
             
             {% endfor %}
@@ -47,10 +93,13 @@ grid-template-columns: 0.5fr 3fr 0.5fr;
 
 
 
+</div>
 
 
+<div class="socials-bar">
 
-
-
+<a href="" class="instagram"><img src="{% static 'assets/svgs/734395_instagram_media_online_photo_social_icon.png' %}" alt="instagram icon"></a>
+<a href="" class="youtube"><img src="{% static 'assets/svgs/734362_media_online_social_tube_youtube_icon.svg' %}" alt="youtube icon"></a>
+<a href="" class="email"><img src="{% static 'assets/svgs/1011335_email_envelope_mail_message_send_icon.svg' %}" alt="youtube icon"></a>
 </div>
 {% endblock content %}

@@ -5,7 +5,8 @@
 
     <div class="moto">
 
-      <div class="todays_date_wrapper">
+      <div class="todays_date_wrapper" style="display: flex; flex-direction: column; padding-bottom: 30px; ">
+        <p>Welcome, {{request.user}}</p>
           <span id="datetime"></span>
       
           <script>
@@ -33,19 +34,19 @@
 
       <div class="feedback_button">
         <form class="button_wrapper">
-          <button type="submit" class="discussion" style="width: 12rem;">Do NOT press</button>
+          <button type="submit" class="discussion" style="width: 12rem;">Leave Your Feedback</button>
         </form>
       </div>
     </div>
 
     <div class="daily_title">
       <div class="title_info">
-        <h1><strong>Todays <br>DailyKnower Topic:</strong></h1>
+        <h1 style="margin-bottom: 10px;"><strong>Todays <br>DailyKnower Topic:</strong></h1>
 
         
         {% for post in posts|slice:":1" %}
-        <div class="latest-post">
-          <h5><a style="text-decoration: none;" href="{% url 'post' post.id %}">{{post.name}}</a></h5>
+        <div class="latest-post" style="background-color: rgb(220,220,220); border-radius: 20px; padding: 10px; font-size: 30px; box-shadow: 0px 0px 10px grey; max-width: 90%; max-height: 40%; ">
+          <h5 style="text-align: center;"><a style="text-decoration: none;" href="{% url 'feed' %}">{{latest_post.name}}</a></h5>
         </div>
               
         {% endfor %}
@@ -53,13 +54,15 @@
       </div>
       <div class="find_friends">
         <p>Scroll here and <br> find your friends</p>
-        <div class="find_friends_info">
+        <div class="find_friends_info" style="overflow-y: scroll; border-radius: 20px;">
             
-            
+          {% for user in users %}
           <ul>
-            <li><h5>{{user.username}}</h5></li>
+            <a href=""> <li><h3>{{user}}</h3></li></a>
+            {% endfor %}
           </ul>
 
+          
             
         </div> 
       </div>
@@ -67,34 +70,72 @@
     </div>
 
     <div class="resources_wrapper">
+
       <div class="resources_boxes">
         <div class="resource_box_one">
-          <div class="box_title">
+          <div class="box_title" style="background-color: rgb(247,208,43); border-top-left-radius: 20px; border-top-right-radius: 20px; font-size: 10px; justify-content: start;">
              <h4>Articles</h4>
+
+    
+          </div>
+          <p class="preview-text" style="opacity: 0.5; font-size: 8px; text-align: center;"></p>
+          <div style="height: 60px;">
+        
           </div>
 
-          <button popovertarget="myheader" popovertargetaction = "show" class="box-button-1">open full</button>
+          <button popovertarget="myheader" popovertargetaction = "show" class="box-button-1" style="font-size: 10px;">open full</button>
           
 
-          <div popover id="myheader" style="width: 200px; height: 200px; text-align: center;">
-            <h1>Articles</h1>
-
+          <div popover id="myheader" class="my-header" style="width: 80%; height: 70%; text-align: center; border-radius: 40px;">
+    
+            <p>test test test test tets lorem i</p>
           </div>
 
         </div>
         <div class="resource_box_two">
-          <div class="box_title">
+          <div class="box_title" style="background-color: rgb(247,208,43); border-top-left-radius: 20px; border-top-right-radius: 20px; font-size: 10px; justify-content: start;">
              <h4>Videos</h4>
           </div>
-          <button class="box-button-2">open full</button>
+
+
+          <div style="height: 60px;">
+            <p class="preview-text" style="opacity: 0.5; font-size: 8px; text-align: center;"></p>
+          </div>
+
+
+          <button popovertarget="myheader2" popovertargetaction = "show" class="box-button-2" class="box-button-2" style="font-size: 10px;">open full</button>
+
+          <div popover id="myheader2" style="width: 80%; height: 70%; text-align: center; border-radius: 40px;">
+
+            <p>test test test </p>
+          </div>
           
         </div>
 
         <div class="resource_box_three">
-          <div class="box_title">
+          <div class="box_title" style="background-color: rgb(247,208,43); border-top-left-radius: 20px; border-top-right-radius: 20px; font-size: 10px; justify-content: start;">
              <h4>Other...</h4>
           </div>
-          <button class="box-button-3">open full</button>
+
+          
+
+          <div style="min-height: 60px;"> 
+            <p class="preview-text" style="opacity: 0.5; font-size: 8px; text-align: center;"></p>
+          </div>
+
+
+          <button popovertarget="myheader3" popovertargetaction = "show" class="box-button-3" class="box-button-3" style="font-size: 10px;">open full</button>
+          
+
+
+          <div popover id="myheader3" style="width: 80%; height: 70%; text-align: center; border-radius: 40px;">
+
+            <p>test test test</p>
+
+        </div>
+
+        
+
         </div>
           
         </div>
@@ -102,9 +143,21 @@
         </div>
 
     <form action="{% url 'feed' %}" class="discussion_button_wrapper">
-      <button type="submit" class="discussion">I'm ready to discuss</button>
+      <button type="submit" class="discussion" style="font-size: 20px;">I'm ready to discuss</button>
     </form>
 
+
+
+    <script>
+      document.querySelectorAll('.resources_boxes > div').forEach((box) => {
+  const popoverContent = box.querySelector('[popover]').textContent; // Get popover content
+  const previewText = popoverContent.slice(0, 200) + '...'; // Truncate to first 40 characters
+  const previewElement = box.querySelector('p');
+  if (previewElement) {
+    previewElement.textContent = `${previewText}`;
+  }
+});
+    </script>
 
 
 

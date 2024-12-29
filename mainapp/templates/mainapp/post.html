@@ -12,38 +12,102 @@
 <hr>
 
 <div class="feed_page">
-    <div class="previous_dis">
-        <div class="previous_dis_info">
-          <h3>Previous Discussions</h3>
-          <a href="{% url 'feed' %}">Back To Today</a>
-            <hr>
-            {% for other_post in other_posts reversed %}
+  <div class="previous_dis">
+        <div class="previous_dis_info"style="box-shadow: 1px 2px 5px black; margin-bottom: 5px; border-radius: 20px;">
+            <h3>Previous Discussions</h3>
+            <a href="{% url 'feed' %}">Back To Today</a>
+            <hr> 
+            {% for post in posts reversed %}
           <ul>
-            <li><h5><a href="{% url 'post' other_post.id %}">{{other_post.name}}</a></h5>
-                <small>in <strong>{{other_post.dkTopic}}</strong></small> <br>
-                <small>{{other_post.created}}</small></li>
+            <li><h5><a href="{% url 'post' post.id %}">{{post.name}}</a></h5>
+                <small><strong>{{post.dkTopic}}</strong></small> <br>
+                <small>{{post.created}}</small>
+                <small>in <a href="">{{post.dkTopic.topicTheme}}</a></small></li> 
            
-                {% endfor %}
-                
+                {% endfor %}    
           </ul>
         </div>
         <a href="{% url 'all-discussions' %}">view all -></a>
       </div>
       
-      <div class="post_title">
-        <h1>{{post.name}}</h1>
-        <small>{{post.created}}</small>
+      <div class="post_title" style="display: flex; flex-direction: column; align-items: center; overflow-y: scroll; height: 710px; scrollbar-gutter: stable both-edges;">
+        <h2>{{post.created}}</h2>
+        <h4 style="background-color: lightgray; border-radius: 20px; padding: 10px;padding-left: 35px; padding-right: 35px; box-shadow: inset 0 0 10px rgb(220, 220, 220); border: 1px solid black; box-shadow: 1px 2px 5px grey; font-size: 30px;">{{post.name}}</h4>
+        <h3>in {{post.dkTopic.topicTheme}}</h3>
+        
+
+        <div id="fact-checker-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <h2>Fact Checker</h2>
+          <textarea id="query-input" placeholder="Type your question here..." style="width: 800px; border-radius: 20px; padding-top: 20px; padding-left: 10px; resize: none;"></textarea>
+          <div class="button_and_powered" style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
+            <small><p>Powered by xAi</p></small>
+            <p id="loading-message" style="display: none; color: black; font-size: 11px;">Generating response...</p>
+            <button id="fact-check-button" style="font-family: JetBrains Mono; border-radius: 20px; height: 30px; width: 80px;">Check</button>
+          </div>
+          <div id="response-box" style="padding: 10px; margin-top: 20px; overflow-y: auto; background-color: rgb(220,220,220); width: 800px; height: 100px; border: 1px solid black; border-radius: 20px; font-size: 20px; text-align: center; "></div>
+    
+          <div class="chat-response-open" style="width: 100%; display: flex; justify-content: end;">
+            <button popovertarget="chat-extension" popovertargetaction="show" class="chat_button" style="font-family: JetBrains Mono; border-radius: 20px; margin-top: 8px;  animation: fadeOut 0.5s forwards; " >open full</button>
+          </div>
+            <div id="chat-extension" popover id="chat-extension" style="width: 40%; height: 60%; text-align: center; padding: 20px;">
+                <h1>Full Response</h1>
+              </div>
+        </div>
+
+        <div class="chat-body">
+          <h3>Conversation</h3>
+          <hr style="width: 800px;">
+          
+        {% for reply in replies %}
+        <div>
+          {% if request.user == reply.user %}
+          <a href="{% url 'delete-reply' reply.id %}">Delete</a>
+         {% endif %}
+          <small>
+            @{{reply.user}} {{reply.created_on|timesince}} ago <br>
+          </small>
+          
+          <p>{{reply.body}}</p>
+          <hr>
+        </div>
+
+        {% endfor %}
+    
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div class="comment-section">
+          <form method="POST" action="">
+            {% csrf_token %}
+            <input type="text" name="body" placeholder="Leave your comments...">
+
+          </form>
+
+        </div>
+        {% endif %}
+    
+
     </div>
 
-    <div class="recent-updated" style="display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-      <h2>User Activity:</h2>
+    <div class="recent-updated" style="display: flex; flex-direction: column; justify-content: start; align-items: center; position: sticky; overflow: hidden;">
+        <div class="user-activity" style="margin-bottom: 50%; background-color: rgb(220,220,220); font-size: 15px; padding: 5px; border: 1px solid black; box-shadow: 1px 2px 5px black; border-radius: 20px;">
+          <h2>User Activity:</h2>
+          {% for user in repliers %}
 
+          <div>
+            <p>@{{user.username}}</p>
+          </div>
+
+
+          {% endfor %}
+        </div>
       <div class="search-by-topic" style="display:flex; flex-direction: column; align-items: center;">
         <h3 style="text-align: center;">Search Conversations <br>by Topic:</h3>
 
-        <div class="topic-search-content" style="background-color: rgb(220,220,220); border: 1px solid black; width: 180px; height: 200px; display: flex; flex-direction: column; text-align: center; justify-content: center;">
-        {% for topic in topics %}
-        <a href="{% url 'feed' %}?q={{topic.name}}">{{topic.name}}</a>
+        <div class="topic-search-content" style="background-color: rgb(220,220,220); border: 1px solid black; width: 180px; height: 200px; display: flex; flex-direction: column; text-align: center; justify-content: center; box-shadow: 1px 2px 5px black; border-radius: 20px;">
+        <a href="{% url 'all-discussions' %}">View All</a>
+          {% for topic in topics %}
+        <a href="{% url 'all-discussions' %}?q={{topic.name}}">{{topic.name}}</a>
         {% endfor %}
 
         </div>
@@ -52,6 +116,76 @@
   
 
     </div>
+
+    <script>
+
+      function hyperlinkAndFormatText(text) {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+  
+        const hyperlinkedText = text.replace(urlRegex, function(url) {
+  
+          return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+        });
+  
+        return hyperlinkedText.replace(/\n/g, "<br>");
+      }
+  
+  
+     document.getElementById("fact-check-button").addEventListener("click", async function () {
+      const queryInput = document.getElementById("query-input");
+      const responseBox = document.getElementById("response-box");
+      const loadingMessage = document.getElementById("loading-message");
+      const chatExtension = document.getElementById("chat-extension");
+  
+      responseBox.innerHTML = "";
+      chatExtension.innerHTML = "";
+  
+      const query = queryInput.value;
+  
+      if (!query) {
+          responseBox.textContent = "Please enter a query.";
+          chatExtension.textContent = "Please enter a query.";
+          return;
+      }
+
+
+      loadingMessage.style.display = "block";
+  
+
+      try {
+          const response = await fetch("/fact-check/", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({ query: query }),
+          });
+  
+          if (response.ok) {
+              const data = await response.json();
+              loadingMessage.style.display = "none";
+              if (data.error) {
+                  responseBox.innerText = `Error: ${data.error}`;
+                  chatExtension.innerText = `Error: ${data.error}`;
+              } else {
+                  const formattedResponse = hyperlinkAndFormatText(data.choices[0].message.content);
+                  responseBox.innerHTML = formattedResponse;
+                  chatExtension.innerHTML = formattedResponse;
+              }
+          } else {
+              loadingMessage.style.display = "none";
+              responseBox.innerText = `Error: Unable to fetch fact-check.`;
+              chatExtension.innerText = `Error: Unable to fetch fact-check.`;
+          }
+      } catch (error) {
+          console.error("Error:", error);
+          loadingMessage.style.display = "none";
+          responseBox.innerText = "An unexpected error occurred.";
+          chatExtension.innerText = "An unexpected error occurred.";
+      }
+
+  });
+    </script>
 
 
 
