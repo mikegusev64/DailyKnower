@@ -16,4 +16,7 @@ urlpatterns = [
     path('latest/', views.latest_post, name="latest_post"),
     
     path('fact-check/', views.fact_check, name='fact_check'),
+    path('save-note/', views.save_note, name="save_note"),
+    path('get-note/<str:topic_id>/', views.get_note, name='get_note'),
+    path('delete-note/<int:note_id>/', views.delete_note, name='delete_note')
 ]

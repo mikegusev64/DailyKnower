@@ -675,4 +675,27 @@ p{
 
 
 
+div[id^="notes-display"] div {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+div[id^="notes-display"] div:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #f9f9f9;
+  border-bottom: 0;
+  margin-left: -10px;
+  margin-bottom: -10px;
+}
+
 

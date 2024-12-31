@@ -45,3 +45,13 @@ class allReply(models.Model):
     def __str__( self ):
         return self.body[0:60] 
     
+
+class Notes(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    noteTopic = models.ForeignKey(dkTopic, on_delete=models.CASCADE)
+    noteTheme = models.ForeignKey(topicTheme, on_delete=models.CASCADE)
+    noteContent = models.TextField()
+    relatedAdminPost = models.ForeignKey(adminPost, on_delete=models.CASCADE, null=True, blank=True)
+    def __str__(self ):
+        return f"{self.date} - {self.noteTopic} - {self.noteTheme} - {self.relatedAdminPost}"

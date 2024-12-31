@@ -1,6 +1,6 @@
 from typing import Any
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import adminPost, dkTopic, allReply, topicTheme
+from .models import adminPost, dkTopic, allReply, topicTheme, Notes
 from django.contrib.auth.models import User
 from django.views.generic import ListView
 import requests
@@ -15,6 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
+from datetime import date
 
 
 
@@ -262,3 +263,67 @@ def fact_check(request):
             return JsonResponse({"error": F"An error occurred: {str(e)}"}, status=500)
         
              
+
+@login_required(login_url="login")
+def save_note(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            topic_id = data.get('noteTopic')
+            theme_id = data.get('noteTheme')
+            content = data.get('noteContent')
+
+            if not topic_id or not theme_id or not content:
+                return JsonResponse({'status': 'error', 'message': 'Topic, theme, or content is missing.'}, status=400)
+
+            # Fetch today's topic, theme, and post
+            note_topic = get_object_or_404(dkTopic, id=topic_id)
+            note_theme = get_object_or_404(topicTheme, id=theme_id)
+            related_post = adminPost.objects.filter(dkTopic=note_topic, topicTheme=note_theme).order_by('-created_at').first()
+
+            if not related_post:
+                return JsonResponse({'status': 'error', 'message': 'No admin post found for today\'s topic and theme.'}, status=404)
+
+            # Save the note associated with the current user, topic, theme, and post
+            Notes.objects.create(
+                user=request.user,
+                noteTopic=note_topic,
+                noteTheme=note_theme,
+                relatedAdminPost=related_post,
+                noteContent=content
+            )
+
+            return JsonResponse({'status': 'success', 'message': 'Note saved successfully.'})
+
+        except Exception as e:
+            logging.error(f"Error in save_note: {str(e)}")
+            return JsonResponse({'status': 'error', 'message': 'Internal server error.'}, status=500)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
+
+@login_required
+def get_note(request, topic_id):
+    notes = Notes.objects.filter(noteTopic_id=topic_id, user=request.user).select_related('relatedAdminPost', 'noteTopic', 'noteTheme')
+    notes_data = [
+        {
+            'id': note.id,
+            'content': note.noteContent,
+            'relatedadminPost': note.adminPost.name if note.adminPost else 'No Post',
+            'topic': note.noteTopic.name,
+            'theme': note.noteTheme.name,
+        }
+        for note in notes
+    ]
+    return JsonResponse({'status': 'success', 'notes': notes_data})
+
+    
+    
+@login_required
+def delete_note(request, note_id):
+    if request.method == "DELETE":
+        note = get_object_or_404(Notes, id=note_id, user= request.user)
+        note.delete()
+        return JsonResponse({'status': 'success', 'message': 'Note Deleted.'})
+    return JsonResponse({'status': 'error', 'message': 'Failed to Delete Note.'})
+        
+            
