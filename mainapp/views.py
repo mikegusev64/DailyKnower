@@ -173,8 +173,17 @@ def deleteReply(request, pk):
 def feedback(request):
     return render(request, "feedback.html")
 
-def account(request):
-    return render(request, "account_settings.html")
+
+
+
+def accountPage(request):
+    
+    return render(request, "mainapp/account_page.html")
+
+
+
+
+
 
 
 @login_required(login_url='login')
@@ -279,7 +288,7 @@ def save_note(request):
             # Fetch today's topic, theme, and post
             note_topic = get_object_or_404(dkTopic, id=topic_id)
             note_theme = get_object_or_404(topicTheme, id=theme_id)
-            related_post = adminPost.objects.filter(dkTopic=note_topic, topicTheme=note_theme).order_by('-created_at').first()
+            related_post = adminPost.objects.filter(dkTopic=note_topic).order_by('-created_at').first()
 
             if not related_post:
                 return JsonResponse({'status': 'error', 'message': 'No admin post found for today\'s topic and theme.'}, status=404)
@@ -290,7 +299,8 @@ def save_note(request):
                 noteTopic=note_topic,
                 noteTheme=note_theme,
                 relatedAdminPost=related_post,
-                noteContent=content
+                noteContent=content,
+                noteTopic_id = topic_id,
             )
 
             return JsonResponse({'status': 'success', 'message': 'Note saved successfully.'})
@@ -302,15 +312,13 @@ def save_note(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 @login_required
-def get_note(request, topic_id):
-    notes = Notes.objects.filter(noteTopic_id=topic_id, user=request.user).select_related('relatedAdminPost', 'noteTopic', 'noteTheme')
+def get_notes(request, topic_id):
+    notes = Notes.objects.filter(noteTopic_id=topic_id, user=request.user).select_related('relatedAdminPost')
     notes_data = [
         {
             'id': note.id,
             'content': note.noteContent,
-            'relatedadminPost': note.adminPost.name if note.adminPost else 'No Post',
-            'topic': note.noteTopic.name,
-            'theme': note.noteTheme.name,
+            
         }
         for note in notes
     ]

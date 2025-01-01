@@ -662,6 +662,7 @@ p{
 [popover] {
   animation: fadeIn 0.2s ease-in;
   -webkit-animation: fadeIn 0.2s ease-in;
+
 }
 
 @keyframes fadeIn {
@@ -699,3 +700,25 @@ div[id^="notes-display"] div:after {
 }
 
 
+::after{
+  content: none !important; /* Removes both ::after and ::before */
+}
+
+
+#notes-display-articles, #notes-display-videos, #notes-display-other{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+  width: 90%;
+  min-height: 40px;
+  background-color: beige;
+  padding: 15px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 7px grey;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}

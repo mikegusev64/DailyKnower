@@ -1,10 +1,26 @@
 function saveNote(section) {
     const textarea = document.querySelector(`#note-input-${section}`);
+    const topicIdInput = document.querySelector(`#note-dkTopic-${section}`);
+    const themeIdInput = document.querySelector('#note-topicTheme'); 
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
   
+
+    console.log("Textarea:", textarea);
+    console.log("Topic ID Input:", topicIdInput);
+
     if (!textarea) {
       console.error(`Text Area Not Found for section: ${section}`);
       return;
+    }
+
+    if (!topicIdInput) {
+        console.error(`Topic ID input not found for section: ${section}`);
+        return;
+    }
+
+    if (!themeIdInput) {
+        console.error("Theme ID input not found.");
+        return;
     }
   
     const content = textarea.value.trim();
@@ -13,9 +29,19 @@ function saveNote(section) {
       return;
     }
   
-    const dkTopic = document.querySelector('#note-dkTopic').value;
-    const topicTheme = document.querySelector('#note-topicTheme').value;
-  
+
+    const topicId = topicIdInput.value;
+    const themeId = themeIdInput.value;
+
+    console.log("Saving Note:");
+    console.log({
+        noteTopic: topicId,
+        noteTheme: themeId,
+        noteContent: content,
+    });
+
+
+
     fetch('/save-note/', {
       method: 'POST',
       headers: {
@@ -23,9 +49,9 @@ function saveNote(section) {
         'X-CSRFToken': csrfToken,
       },
       body: JSON.stringify({
-        noteTopic: dkTopic,
-        noteTheme: topicTheme,
+        noteTopic: topicId,
         noteContent: content,
+        noteTheme: themeId,
       }),
     })
       .then(response => response.json())
@@ -42,39 +68,46 @@ function saveNote(section) {
   }
   
   function fetchNotes(section) {
-    const topicId = document.querySelector('#note-dkTopic').value;
-    const notesDisplay = document.querySelector(`#notes-display-${section}`);
-  
-    if (!notesDisplay) {
-      console.error(`Notes display container not found for section: ${section}`);
-      return;
+    const topicIdInput = document.querySelector(`#note-dkTopic-${section}`);
+    if (!topicIdInput) {
+        console.error(`Topic ID input not found for section: ${section}`);
+        return;
     }
+
+    const topicId = topicIdInput.value;
+    const notesDisplay = document.querySelector(`#notes-display-${section}`);
+
+    if (!notesDisplay) {
+        console.error(`Notes display container not found for section: ${section}`);
+        return;
+    }
+
+    console.log(`Fetching notes for section: ${section}, Topic ID: ${topicId}`);
+
+    notesDisplay.innerHTML = "";
   
     fetch(`/get-notes/${topicId}/`)
       .then(response => response.json())
       .then(data => {
+        console.log("Fetched data:", data);
         if (data.status === 'success') {
           notesDisplay.innerHTML = '';
   
           data.notes.forEach(note => {
+            console.log("Rendering note:", note);
             const bubble = document.createElement('div');
-            bubble.innerHTML = `
-              <div>
-                <strong>Post:</strong> ${note.relatedAdminPost}<br>
-                <strong>Topic:</strong> ${note.topic}<br>
-                <strong>Theme:</strong> ${note.theme}<br>
-                <strong>Note:</strong> ${note.content}
-              </div>
-            `;
+            bubble.textContent=note.content;
             bubble.style.cssText = `
-              background-color: rgb(189, 189, 189);
+              background-color: rgb(246,238,175);
               border-radius: 10px;
               padding: 10px;
               margin: 10px 0;
+              box-shadow: 2px 2px 7px grey;
             `;
             notesDisplay.appendChild(bubble);
           });
         } else {
+            console.error("Failed to fetch notes:", data.message);
           notesDisplay.innerHTML = '<p>No notes for this section yet.</p>';
         }
       })
@@ -82,7 +115,13 @@ function saveNote(section) {
   }
   
   document.addEventListener('DOMContentLoaded', () => {
-    ['articles', 'videos', 'other'].forEach(fetchNotes);
+    console.log("DOM fully loaded and parsed.");
+    console.log("Starting to fetch notes for sections: articles, videos, other");
+
+    ['articles', 'videos', 'other'].forEach(section => {
+        console.log(`Fetching notes for section: ${section}`);
+        fetchNotes(section); 
+    });
   });
   
   
