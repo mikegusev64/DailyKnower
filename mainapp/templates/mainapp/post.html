@@ -30,7 +30,7 @@
         <a href="{% url 'all-discussions' %}">view all -></a>
       </div>
       
-      <div class="post_title" style="display: flex; flex-direction: column; align-items: center; overflow-y: scroll; height: 710px; scrollbar-gutter: stable both-edges;">
+      <div class="post_title" style="display: flex; flex-direction: column; align-items: center; overflow-y: scroll; height: 710px; scrollbar-gutter: stable both-edges; margin-bottom: 10px;">
         <h2>{{post.created}}</h2>
         <h4 style="background-color: lightgray; border-radius: 20px; padding: 10px;padding-left: 35px; padding-right: 35px; box-shadow: inset 0 0 10px rgb(220, 220, 220); border: 1px solid black; box-shadow: 1px 2px 5px grey; font-size: 30px;">{{post.name}}</h4>
         <h3>in {{post.dkTopic.topicTheme}}</h3>
@@ -76,10 +76,10 @@
         </div>
 
         {% if request.user.is_authenticated %}
-        <div class="comment-section">
+        <div class="comment-section" style="width: 100%; margin-top: 15px;">
           <form method="POST" action="">
             {% csrf_token %}
-            <input type="text" name="body" placeholder="Leave your comments...">
+            <input style="font-family: JetBrains Mono; width: 90%; height: 40px; border-radius: 20px; box-shadow: 0px 0px 10px grey inset; border: 2px solid black;" type="text" name="body" placeholder="Leave your comments...">
 
           </form>
 

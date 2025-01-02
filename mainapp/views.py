@@ -97,6 +97,8 @@ def feed(request):
     replies = latest_post.allreply_set.all().order_by("-created_on") if latest_post else []
     repliers = latest_post.repliers.all() if latest_post else []
     
+    message_activity = allReply.objects.all
+    
     if request.method == "POST" and latest_post:
         reply = allReply.objects.create(
             user = request.user,
@@ -114,6 +116,7 @@ def feed(request):
                 "replies": replies,
                'repliers': repliers,
                'post': post,
+               'message_activity': message_activity,
                }
     return render(request, "mainapp/feed.html", context)
 

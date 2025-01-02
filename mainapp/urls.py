@@ -13,7 +13,6 @@ urlpatterns = [
     path('delete-reply/<str:pk>/', views.deleteReply, name="delete-reply"),
     path('all-discussions', views.allDiscussions, name="all-discussions"),
     path('latest/', views.latest_post, name="latest_post"),
-    
     path('fact-check/', views.fact_check, name='fact_check'),
     path('save-note/', views.save_note, name="save_note"),
     path('get-notes/<int:topic_id>/', views.get_notes, name='get_notes'),

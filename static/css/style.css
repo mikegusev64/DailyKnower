@@ -326,6 +326,8 @@ p{
 
 }
 
+
+
 .find_friends_info li {
   display: flex;
   flex-direction: column;
@@ -471,6 +473,10 @@ p{
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+
+.post_title::-webkit-scrollbar{
+  display: none;
 }
 
 
