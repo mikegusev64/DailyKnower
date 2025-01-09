@@ -127,7 +127,7 @@ function saveNote(section) {
   
   document.querySelectorAll('.resources_boxes > div').forEach((box) => {
     const popoverContent = box.querySelector('[popover]').textContent; // Get popover content
-    const previewText = popoverContent.slice(0, 200) + '...'; // Truncate to first 40 characters
+    const previewText = popoverContent.slice(0, 100) + '...'; // Truncate to first 40 characters
     const previewElement = box.querySelector('p');
     if (previewElement) {
       previewElement.textContent = `${previewText}`;
