@@ -51,7 +51,7 @@ flex-direction: column;
 ">
 
 
-<div class="topic-themes" style="display: flex; flex-direction: column; justify-content: center; text-align: center; background-color:rgb(220, 220, 220); box-shadow: 0 0 15px grey; border-radius: 20px; justify-content: start; max-height: 150px; margin-top: 10px; width: 75%; margin-left: auto; margin-right: auto;">
+<div class="topic-themes" style="display: flex; flex-direction: column; justify-content: center; text-align: center; background-color:rgb(220, 220, 220); box-shadow: 0 0 15px grey; border-radius: 20px; justify-content: start; max-height: 150px; margin-top: 10px; width: 75%; margin-left: auto; margin-right: auto; border: 1px solid black;">
   <h2 style="margin-bottom: 0px;"> <a href="{% url 'all-discussions' %}">All Themes</a></h2>
   <div style="display: flex; flex-direction: row; justify-content: center;">
     {% for theme in themes %}
@@ -76,8 +76,8 @@ flex-direction: column;
 
       <div style="max-width: 60%; margin-left: auto; margin-right: auto;"><h5 style="align-items: start;">There are {{post_count}} debates in the archive.</h5></div>
 
-      <div class="dis-archive" style="display: flex; flex-direction: column; align-items: center; ">
-        <div class="all-dis-inner" style="text-align: center; width: 500px; background-color: rgb(220, 220, 220); box-shadow: 0 0 15px grey; border-radius: 20px; padding: 20px; width: 70%; overflow-y: scroll; height: 600px;">
+      <div class="dis-archive" style="display: flex; flex-direction: column; align-items: center;">
+        <div class="all-dis-inner" style="text-align: center; width: 500px; background-color: rgb(220, 220, 220); box-shadow: 0 0 15px grey; border-radius: 20px; padding: 20px; width: 70%; overflow-y: scroll; height: 600px;  border: 1px solid black; margin-bottom: 20px; ">
             {% for post in posts reversed %}
                    <h3> <a href="{% url 'post' post.id %}">{{post.name}}</a> </h3>
                    <h4>{{post.dkTopic}}</h4>

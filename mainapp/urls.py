@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.contrib import admin
+from django.urls import path, include
+from mainapp import views
 
 
 urlpatterns = [
@@ -18,4 +21,12 @@ urlpatterns = [
     path('get-notes/<int:topic_id>/', views.get_notes, name='get_notes'),
     path('delete-note/<int:note_id>/', views.delete_note, name='delete_note'),
     path('account/', views.accountPage, name="account"),
+    path('subscribe/', views.subscribe, name='subscribe'),
+    path('cancel/', views.cancel, name='cancel'),
+    path('success/', views.success, name='success'),
+    path('create-checkout-session/', views.create_checkout_session, name='create-checkout-session'),
+    path('direct-to-customer-portal/', views.direct_to_customer_portal, name='direct-to-customer-portal'),
+    path('collect-stripe-webhook/', views.collect_stripe_webhook, name='collect-stripe-webhook'),
+
+
 ]

@@ -74,8 +74,9 @@ p{
 .title_info {
   font-weight: 800;
   font-size: 40px;
-  margin-top: -80px;
-  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .topic_info_heading {

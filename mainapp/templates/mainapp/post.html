@@ -30,9 +30,9 @@
         <a href="{% url 'all-discussions' %}">view all -></a>
       </div>
       
-      <div class="post_title" style="display: flex; flex-direction: column; align-items: center; overflow-y: scroll; height: 710px; scrollbar-gutter: stable both-edges; margin-bottom: 10px;">
+      <div class="post_title" style="display: flex; flex-direction: column; align-items: center; overflow-y: scroll; height: 710px; scrollbar-gutter: stable both-edges; max-width: 60%;">
         <h2>{{post.created}}</h2>
-        <h4 style="background-color: lightgray; border-radius: 20px; padding: 10px;padding-left: 35px; padding-right: 35px; box-shadow: inset 0 0 10px rgb(220, 220, 220); border: 1px solid black; box-shadow: 1px 2px 5px grey; font-size: 30px;">{{post.name}}</h4>
+        <h4 style="background-color: lightgray; border-radius: 20px; padding: 10px;padding-left: 35px; padding-right: 35px; box-shadow: inset 0 0 10px rgb(220, 220, 220); border: 1px solid black; box-shadow: 1px 2px 5px grey; font-size: 30px; display: flex; flex-wrap: wrap; max-width: 90%;">{{post.name}}</h4>
         <h3>in {{post.dkTopic.topicTheme}}</h3>
         
 
@@ -49,14 +49,14 @@
           <div class="chat-response-open" style="width: 100%; display: flex; justify-content: end;">
             <button popovertarget="chat-extension" popovertargetaction="show" class="chat_button" style="font-family: JetBrains Mono; border-radius: 20px; margin-top: 8px;  animation: fadeOut 0.5s forwards; " >open full</button>
           </div>
-            <div id="chat-extension" popover id="chat-extension" style="width: 40%; height: 60%; text-align: center; padding: 20px;">
+            <div id="chat-extension" popover id="chat-extension" style="width: 40%; height: 60%; text-align: center; padding: 20px; border-radius: 20px;">
                 <h1>Full Response</h1>
               </div>
         </div>
 
-        <div class="chat-body">
+        <div class="chat-body" style="max-width: 800px; border: 1px solid black; margin-top: 10px; border-radius: 20px; padding: 10px;">
           <h3>Conversation</h3>
-          <hr style="width: 800px;">
+          <hr style="max-width: 800px;">
           
         {% for reply in replies %}
         <div>
@@ -77,9 +77,9 @@
 
         {% if request.user.is_authenticated %}
         <div class="comment-section" style="width: 100%; margin-top: 15px;">
-          <form method="POST" action="">
+          <form style="display: flex; justify-content:center; margin-bottom: 10px;" method="POST" action="">
             {% csrf_token %}
-            <input style="font-family: JetBrains Mono; width: 90%; height: 40px; border-radius: 20px; box-shadow: 0px 0px 10px grey inset; border: 2px solid black;" type="text" name="body" placeholder="Leave your comments...">
+            <input style="font-family: JetBrains Mono; width: 90%; height: 40px; border-radius: 20px; box-shadow: 0px 0px 3px grey inset; border: 2px solid black; padding-left: 10px;" type="text" name="body" placeholder="Leave your comments...">
 
           </form>
 
@@ -89,15 +89,16 @@
 
     </div>
 
-    <div class="recent-updated" style="display: flex; flex-direction: column; justify-content: start; align-items: center; position: sticky; overflow: hidden;">
-        <div class="user-activity" style="margin-bottom: 50%; background-color: rgb(220,220,220); font-size: 15px; padding: 5px; border: 1px solid black; box-shadow: 1px 2px 5px black; border-radius: 20px;">
-          <h2>User Activity:</h2>
-          {% for user in repliers %}
-
-          <div>
-            <p>@{{user.username}}</p>
-          </div>
-
+    <div class="recent-updated" style="display: flex; flex-direction: column; justify-content: start; align-items: center;">
+      <div class="user-activity" style="margin-bottom: 10%; background-color: rgb(220,220,220); font-size: 10px; padding: 5px; border: 1px solid black; box-shadow: 1px 2px 5px black; border-radius: 20px; max-width: 220px; max-height: 380px; overflow-y: scroll;">
+        <h2 style="text-align: center;">User Activity:</h2>
+    {% for message in message_activity %}
+    <hr>
+    <div>
+     <small style="display: flex; flex-direction: row; justify-content: space-around;">@{{message.user}}  {{message.created_on|timesince}} ago</small> <br>
+     <small style="display: flex; justify-content: center; text-align: center;">commented in <br> "{{message.post}}"</small>
+     <small style="display: flex; justify-content: center; text-align: center; background-color: rgb(198, 198, 198); border-radius: 10px; padding: 5px; margin-top: 5px;">{{message.body}}</small>
+    </div>
 
           {% endfor %}
         </div>

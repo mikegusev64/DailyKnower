@@ -21,15 +21,15 @@
         <li><div id="mySidenav" class="sidenav">
           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         
-          <a href="{% url 'all-discussions' %}">Previous <br>Discussions</a>
+          <a href="{% url 'all-discussions' %}" style="color: whitesmoke;">Previous <br>Discussions</a>
 
           {% if request.user.is_authenticated %}
 
-          <a href="{% url 'logout' %}">Log Out</a>
+          <a href="{% url 'logout' %}"  style="color: whitesmoke;">Log Out</a>
 
           {% else %}
 
-          <a href="{% url 'login' %}">Log In</a>
+          <a href="{% url 'login' %}"  style="color: whitesmoke;">Log In</a>
 
           
 
@@ -37,7 +37,7 @@
           {% endif %}
           <div class="feedback_button">
             <form class="button_wrapper">
-              <button type="submit" class="discussion" style="display: inline-block; width: 100px; height: 80px; margin-top: 60%;">Do NOT press</button>
+              <button type="submit" class="discussion" style="display: inline-block; width: 100px; height: 80px; margin-top: 60%; ">Leave Your Feedback</button>
             </form>
           </div>
         </div>
@@ -62,7 +62,7 @@
         <li>
           <div id="myAccountSidenav" class="accountSidenav">
             <a href="javascript:void(0)" class="closebtnAccount" onclick="closeAccountNav()">&times;</a>
-            <a href="{% url 'account' %}">Profile</a>
+            <a href="{% url 'account' %}"  style="color: whitesmoke;">Profile</a>
           
 
           </div>

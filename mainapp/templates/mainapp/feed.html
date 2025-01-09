@@ -64,7 +64,7 @@
           </div>
     </div>
 
-    <div class="chat-body" style="text-align: center; ">
+    <div class="chat-body" style="max-width: 800px; border: 1px solid black; margin-top: 10px; border-radius: 20px; padding: 10px; text-align: center; ">
       <h3>Conversation</h3>
       <hr style="width: 800px;">
 
@@ -88,11 +88,10 @@
     </div>
 
     {% if request.user.is_authenticated %}
-    <div class="comment-section">
-      <form method="POST" action="">
+    <div class="comment-section" style="width: 100%; margin-top: 15px;">
+      <form style="display: flex; justify-content:center; margin-bottom: 10px;" method="POST" action="">
         {% csrf_token %}
-        <input type="text" name="body" placeholder="Leave your comments...">
-
+        <input style="font-family: JetBrains Mono; width: 90%; height: 40px; border-radius: 20px; box-shadow: 0px 0px 3px grey inset; border: 2px solid black; padding-left: 10px;" type="text" name="body" placeholder="Leave your comments...">
       </form>
 
     </div>
@@ -172,12 +171,14 @@
   </script>
 
 <div class="recent-updated" style="display: flex; flex-direction: column; justify-content: start; align-items: center;">
-  <div class="user-activity" style="margin-bottom: 50%; background-color: rgb(220,220,220); font-size: 15px; padding: 5px; border: 1px solid black; box-shadow: 1px 2px 5px black; border-radius: 20px;">
-    <h2>User Activity:</h2>
-    {% for user in repliers %}
-
+  <div class="user-activity" style="margin-bottom: 10%; background-color: rgb(220,220,220); font-size: 10px; padding: 5px; border: 1px solid black; box-shadow: 1px 2px 5px black; border-radius: 20px; max-width: 250px; max-height: 380px; overflow-y: scroll;">
+    <h2 style="text-align: center;">User Activity:</h2>
+    {% for message in message_activity %}
+    <hr>
     <div>
-      <p>@{{user.username}}</p>
+     <small style="display: flex; flex-direction: row; justify-content: space-around;">@{{message.user}}  {{message.created_on|timesince}} ago</small> <br>
+     <small style="display: flex; justify-content: center; text-align: center;">commented in <br> "{{message.post}}"</small>
+     <small style="display: flex; justify-content: center; text-align: center; background-color: rgb(198, 198, 198); border-radius: 10px; padding: 5px; margin-top: 5px;">{{message.body}}</small>
     </div>
 
 

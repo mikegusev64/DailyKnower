@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 import datetime
+from django.db import models
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -42,8 +44,11 @@ class allReply(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        ordering = ['-last_updated', '-created_on']
+    
     def __str__( self ):
-        return self.body[0:60] 
+        return self.body[0:50] 
     
 
 class Notes(models.Model):
@@ -55,3 +60,18 @@ class Notes(models.Model):
     relatedAdminPost = models.ForeignKey(adminPost, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self ):
         return f"{self.date} - {self.noteTopic} - {self.noteTheme} - {self.relatedAdminPost}"
+    
+    
+
+
+
+class CheckoutSessionRecord(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, help_text="The user who initiated the checkout."
+    )
+    stripe_customer_id = models.CharField(max_length=255)
+    stripe_checkout_session_id = models.CharField(max_length=255)
+    stripe_price_id = models.CharField(max_length=255)
+    has_access = models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
+
