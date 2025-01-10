@@ -112,6 +112,8 @@ def feed(request):
     
     message_activity = allReply.objects.all
     
+    reply_count = replies.count()
+    
     if request.method == "POST" and latest_post:
         reply = allReply.objects.create(
             user = request.user,
@@ -130,6 +132,7 @@ def feed(request):
                'repliers': repliers,
                'post': post,
                'message_activity': message_activity,
+                'reply_count': reply_count,
                }
     return render(request, "mainapp/feed.html", context)
 
@@ -148,6 +151,7 @@ def post(request,pk):
     repliers = post.repliers.all()
     
     message_activity = allReply.objects.all
+    reply_count = replies.count()
     
     if request.method == "POST":
         reply = allReply.objects.create(
@@ -168,6 +172,7 @@ def post(request,pk):
                "replies": replies,
                'repliers': repliers,
                'message_activity': message_activity,
+                'reply_count': reply_count,
                
     }
     return render(request, "mainapp/post.html", context)
@@ -194,7 +199,7 @@ def feedback(request):
 
 
 
-
+@login_required(login_url='login')
 def accountPage(request):
     
     return render(request, "mainapp/account_page.html")

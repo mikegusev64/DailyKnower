@@ -4,7 +4,16 @@
 
 {% block content %}
 
-<h1></h1>
+<h1>Your Profile</h1>
+
+<div class="profile-info">
+    <h2>Username: {{request.user}}</h2>
+    <h2>Email: {{request.user.email}}</h2>
+    <h2>Subscription: {{request.user.subscription}}</h2>
+    <h2>Subscription Status: {{request.user.subscription_status}}</h2>
+    <h2>Subscription Expiry: {{request.user.subscription_expiry}}</h2>
+
+    <a href="{% url 'logout' %}"><h4>logout</h4></a>
 
 
 
