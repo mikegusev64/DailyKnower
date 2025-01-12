@@ -1,21 +1,113 @@
 {% extends 'main.html' %}
 {% load static %}
-
-
 {% block content %}
 
-<h1>Your Profile</h1>
+<style>
+.page_wrapper_account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
 
-<div class="profile-info">
-    <h2>Username: {{request.user}}</h2>
-    <h2>Email: {{request.user.email}}</h2>
-    <h2>Subscription: {{request.user.subscription}}</h2>
-    <h2>Subscription Status: {{request.user.subscription_status}}</h2>
-    <h2>Subscription Expiry: {{request.user.subscription_expiry}}</h2>
-
-    <a href="{% url 'logout' %}"><h4>logout</h4></a>
+h1{
+    text-align: center;
+}
 
 
+.page_middle{
+    text-align: center;
+}
+</style>
+
+<h1> {{user.username}}'s Profile</h1>
+
+<div class="page_wrapper_account">
+
+    <div class="page_left">
+
+    </div>
+
+
+  <div class="page_middle">
+    <div class="profile-info">
+
+
+      {% if request.user.username == user.username %}
+      <a href="{% url 'logout' %}"><h4>logout</h4></a>
+        {% endif %}
+    </div>
+
+    <div
+      class="chat-body"
+      style="
+        max-width: 800px;
+        border: 1px solid black;
+        margin-top: 10px;
+        border-radius: 20px;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+      "
+    >
+
+      
+
+
+      <h3>Comments Made by {{ user.username }}</h3>
+      <small>{{user_replies_count}} Comments</small>
+      <hr style="max-width: 800px; min-width: 800px" />
+      <div>
+        {% if user_replies %} {% for reply in user_replies %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px">
+          <p>
+            <strong>On Post:</strong>
+            <a href="{% url 'post' reply.post.id %}">{{ reply.post.name }}</a>
+          </p>
+          <p><strong>Comment:</strong> {{ reply.body }}</p>
+          <p><em>Posted on {{ reply.created_on }}</em></p>
+          {% if reply.image %}
+          <img
+            src="{{ reply.image.url }}"
+            alt="Reply Image"
+            style="max-width: 300px; max-height: 300px"
+          />
+          {% endif %}
+        </div>
+        {% endfor %} {% else %}
+        <p>{{ user.username }} hasn't made any comments yet.</p>
+        {% endif %}
+      </div>
+
+      <div class="pagination">
+        <span class="step-links">
+          {% if user_replies.has_previous %}
+          <a href="?page=1">&laquo; First</a>
+          <a href="?page={{ user_replies.previous_page_number }}">Previous</a>
+          {% endif %}
+
+          <span class="current">
+            Page {{ user_replies.number }} of {{user_replies.paginator.num_pages}}.
+          </span>
+
+          {% if user_replies.has_next %}
+          <a href="?page={{ user_replies.next_page_number }}">Next</a>
+          <a href="?page={{ user_replies.paginator.num_pages }}"
+            >Last &raquo;</a
+          >
+          {% endif %}
+        </span>
+      </div>
+    </div>
+
+    {% include 'footer.html' %} 
+
+  </div>
+
+  <div class="page-right">
+
+  </div>
+</div>
 
 
 {% endblock content %}

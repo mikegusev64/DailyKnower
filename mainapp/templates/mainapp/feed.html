@@ -5,8 +5,122 @@
 {% block content %}
 
 
+<style>
+
+@media screen and (max-width: 1200px) {
+        .responsive-title {
+            font-size: 18px;
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        .responsive-title {
+            font-size: 16px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .responsive-title {
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .responsive-title {
+            font-size: 12px;
+        }
+    }
+  .mobile-buttons {
+    display: none;
+}
+
+  .mobile-buttons-top{
+    display: none;
+  }
+
+  
+  @media screen and (max-width: 768px) {
+    .previous_dis_info, .user-activity, .search-by-topic-wrapper{
+        display: none;
+    }
+
+    
+    .mobile-buttons {
+        position: sticky;
+        top: 3em;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .mobile-buttons-top {
+        
+        top: 0;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .mobile-buttons a, .mobile-buttons-top a {
+        font-family: JetBrains Mono;
+        font-size: 10px;
+        border-radius: 20px;
+        height: 30px;
+        width: 45%;
+        text-align: center;
+        line-height: 30px;
+        background-color: black;
+        color: white;
+        text-decoration: none;
+        opacity: 0.9;
+        margin-right: 2px;
+        margin-left: 2px;
+    }
+    .view-all-button {
+        display: none;
+    }
+    .feed_page{
+    
+      margin-left:0px;
+      margin-right: 0px;
+    }
+
+    .center-page {
+        margin: 0px;
+        padding: 0px;
+        max-width: 100%;
+    }
+
+    .chat-body{
+    
+        max-width: 60%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .comment-section {
+        top: 2.4em;
+        width: 100%; 
+        margin-top: 15px; 
+        position: sticky;
+    }
+   
+
+    .feed-title{
+        height: 1em;
+        font-size: 0.4em;
+        padding-bottom: 2%;
+     
+      }
+    
+
+}
+</style>
+
 <div class="feed-title">
-    <h1>Here's your feed, {{request.user}}</h1>     
+    <h1 style="font-size: 2em;">Here's your feed, {{request.user}}</h1>     
 
 
 </div>
@@ -15,8 +129,8 @@
 
 
 
-<div class="feed_page">
-    <div class="previous_dis"">
+<div class="feed_page" style="overflow: hidden;">
+    <div class="previous_dis">
         <div class="previous_dis_info" style="box-shadow: 1px 2px 5px black; margin-bottom: 5px; border-radius: 20px;">
             <h3>Previous Discussions</h3>
             <hr> 
@@ -30,14 +144,21 @@
                 {% endfor %}    
           </ul>
         </div>
-        <a href="{% url 'all-discussions' %}">view all -></a>
+        <a class="view-all-button" href="{% url 'all-discussions' %}">view all -></a>
       </div>
       
-    <div class="center-page" id="center-page" style="display: flex; flex-direction: column; align-items: center; overflow-y: scroll; height: 710px; scrollbar-gutter: stable both-edges; max-width: 60%; text-align: center;">
-    <div class="current_dis" style="display: flex; flex-direction: column; align-items: center;">
+
+      
+    <div class="center-page" id="center-page" style="display: flex; flex-direction: column; align-items: center; overflow-y: scroll; height: 710px; min-width: 40%; text-align: center; overflow-x: hidden;">
+    <div class="current_dis" style="display: flex; flex-direction: column; align-items: center; max-width: 90%;">
+      <div class="mobile-buttons-top">
+        <a href="{% url 'all-discussions' %}">All Discussions</a>
+        <a href="{% url 'user-feed' %}">User Activity</a>
+        <a href="{% url 'all-discussions' %}">Search By Topic</a>
+    </div>
       <h2>Today's Discussion</h2>
       {% if latest_post %}
-        <h4 id="dis_title" style="background-color: lightgray; border-radius: 20px; padding: 10px; padding-left: 35px; padding-right: 35px; border: 1px solid black; box-shadow: 1px 2px 5px black; font-size: 20px; max-width: 90%;">{{latest_post.name}}</h4>
+        <h4 id="dis_title" class="responsive-title" style="background-color: lightgray; border-radius: 20px; padding: 10px; padding-left: 35px; padding-right: 35px; border: 1px solid black; box-shadow: 1px 2px 5px black; font-size: 1rem; max-width: 90%; margin-left: 3%; margin-right: 3%;">{{latest_post.name}}</h4>
         <h4 style="margin-top: 0px; margin-bottom: 0px;">{{latest_post.dkTopic}}</h4>
         <h4 style="margin-top: 10px; margin-bottom: 0px;">in {{latest_post.dkTopic.topicTheme}}</h4>
       {% else %}
@@ -46,15 +167,17 @@
 
     </div>
 
-    <div id="fact-checker-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+
+
+    <div id="fact-checker-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%;">
       <h2>Fact Checker</h2>
-      <textarea id="query-input" placeholder="Type your question here..." style="width: 800px; border-radius: 20px; padding-top: 20px; padding-left: 10px; resize: none;"></textarea>
+      <textarea id="query-input" placeholder="Type your question here..." style="display: flex; width: 90%; border-radius: 20px; padding-top: 20px; padding-left: 10px;"></textarea>
       <div class="button_and_powered" style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
         <small><p>Powered by xAi</p></small>
         <p id="loading-message" style="display: none; color: black; font-size: 11px;">Generating response...</p>
         <button id="fact-check-button" style="font-family: JetBrains Mono; border-radius: 20px; height: 30px; width: 80px;">Check</button>
       </div>
-      <div id="response-box" style="padding: 10px; margin-top: 20px; overflow-y: auto; background-color: rgb(220,220,220); width: 800px; height: 100px; border: 1px solid black; border-radius: 20px; font-size: 20px; text-align: center; "></div>
+      <div id="response-box" style="padding: 10px; margin-top: 20px; overflow-y: auto; background-color: rgb(220,220,220); width: 95%; height: 50px; border: 1px solid black; border-radius: 20px; font-size: 20px; text-align: center; "></div>
 
       <div class="chat-response-open" style="width: 100%; display: flex; justify-content: end; font-size: 20px;">
         <button popovertarget="chat-extension" popovertargetaction="show" class="chat_button" style="font-family: JetBrains Mono; border-radius: 20px; margin-top: 8px;  animation: fadeOut 0.5s forwards; " >open full</button>
@@ -64,8 +187,19 @@
           </div>
     </div>
 
+
+    <div class="mobile-buttons">
+        <a href="{% url 'all-discussions' %}">All Discussions</a>
+        <a href="{% url 'user-feed' %}">User Activity</a>
+        <a href="{% url 'all-discussions' %}">Search By Topic</a>
+    </div>
+  
+
+
+
+    
     {% if request.user.is_authenticated %}
-    <div class="comment-section" style="width: 100%; margin-top: 15px; position: sticky; top: 0;">
+    <div class="comment-section" style="width: 100%; margin-top: 15px; position: sticky; top:0;">
       <form style="display: flex; justify-content:center; margin-bottom: 10px;" method="POST" action="">
         {% csrf_token %}
         <input style="font-family: JetBrains Mono; width: 90%; height: 40px; border-radius: 20px; box-shadow: 0px 0px 3px grey inset; border: 2px solid black; padding-left: 10px;" type="text" name="body" placeholder="Leave your comments...">
@@ -74,18 +208,18 @@
     </div>
     {% endif %}
 
-    <div class="chat-body" style="max-width: 800px; border: 1px solid black; margin-top: 10px; border-radius: 20px; padding: 10px; text-align: center; margin-bottom: 20px;">
+    <div class="chat-body" style="max-width: 80%; border: 1px solid black; margin-top: 10px; border-radius: 20px; padding: 10px; text-align: center; margin-bottom: 20px; margin-left: 4%; margin-right: 4%;">
       <h3>Conversation</h3>
       <small>{{reply_count}} Comments</small>
-      <hr style="max-width: 800px; min-width: 800px;">
+      <hr style="max-width: 100%; min-width: 100%;">
 
       {% for reply in replies %}
-        <div>
+        <div class="chats">
           {% if request.user == reply.user %}
           <a style="font-size: 13px;" href="{% url 'delete-reply' reply.id %}">Delete</a>
          {% endif %}
           <small>
-            @{{reply.user}} {{reply.created_on|timesince}} ago <br>
+            <a href="{% url 'account' reply.user%}">@{{reply.user}}</a> {{reply.created_on|timesince}} ago <br>
           </small>
           
           <p>{{reply.body}}</p>
@@ -98,8 +232,7 @@
 
     </div>
 
-
-    {% include 'footer.html' %}
+{% include 'footer.html' %}
    
 
 
@@ -177,8 +310,8 @@
 
   </script>
 
-<div class="recent-updated" style="display: flex; flex-direction: column; justify-content: start; align-items: center;">
-  <div class="user-activity" style="margin-bottom: 10%; background-color: rgb(220,220,220); font-size: 10px; padding: 5px; border: 1px solid black; box-shadow: 1px 2px 5px black; border-radius: 20px; max-width: 200px; max-height: 380px; overflow-y: scroll;">
+<div class="recent-updated" style="display: flex; flex-direction: column; justify-content: start; align-items: center; margin-right: 1%;">
+  <div class="user-activity" style="margin-bottom: 10%; background-color: rgb(220,220,220); font-size: 10px; padding: 5px; border: 1px solid black; box-shadow: 1px 2px 5px black; border-radius: 20px; max-width: 100%; max-height: 380px; overflow-y: scroll;">
     <h2 style="text-align: center;">User Activity:</h2>
     {% for message in message_activity %}
     <hr>
@@ -196,7 +329,7 @@
     {% endfor %}
 
   </div>
-
+  <div class="search-by-topic-wrapper">
   <div class="search-by-topic" style="display:flex; flex-direction: column; align-items: center;">
     <h3 style="text-align: center; ">Search Conversations <br>by Topic:</h3>
 
@@ -209,10 +342,15 @@
     </div>
   </div>
 
+</div>
+
 
 
 </div>
 
 </div>
+
+
+
 
 {% endblock content %}

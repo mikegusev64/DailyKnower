@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+<div class="recent-updated" style="display: flex; flex-direction: column; justify-content: start; align-items: center;">
+    <div class="user-activity" style="margin-bottom: 10%; overflow-y: scroll; width: 50%;">
+      <h2 style="text-align: center;">User Activity:</h2>
+      {% for message in message_activity %}
+      <hr>
+      <div style=" background-color: rgb(220,220,220); width: 60%;">
+        
+       <small style="display: flex; justify-content: center;">@{{message.user}}  {{message.created_on|timesince}} ago</small> <br>
+       <small style="display: flex; justify-content: center; text-align: center; flex-direction: column;">commented in <a href="{% url 'post' message.post.id %}">"{{message.post|truncatewords:20}}"</a></small>
+       <small style="display: flex; justify-content: center; text-align: center; background-color: rgb(198, 198, 198); border-radius: 10px; padding: 5px; margin-top: 5px;"><a href="{% url 'post' message.post.id %}">{{message.body|truncatewords:20}}</a></small>
+       {% if request.user == message.user %}
+  
+       <a style="font-size: 9px;" href="{% url 'delete-reply' message.id %}">Delete</a>
+      {% endif %}
+  
+      </div>
+      {% endfor %}
+  
+    </div>
+  
+    <div class="search-by-topic" style="display:flex; flex-direction: column; align-items: center;">
+      <h3 style="text-align: center; ">Search Conversations <br>by Topic:</h3>
+  
+      <div class="topic-search-content" style="background-color: rgb(220,220,220); border: 1px solid black; width: 180px; height: 200px; display: flex; flex-direction: column; text-align: center; justify-content: center; box-shadow: 1px 2px 5px black; border-radius: 20px;">
+        <a href="{% url 'all-discussions' %}" style="font-weight: bold;">View All</a>
+        {% for topic in topics %}
+      <a href="{% url 'all-discussions' %}?q={{topic.name}}">{{topic.name}}</a>
+      {% endfor %}
+  
+      </div>
+    </div>
+  
+  
+  
+  </div>
+
+{% endblock %}

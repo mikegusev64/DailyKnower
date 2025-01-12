@@ -1,47 +1,228 @@
 {% extends 'main.html' %}
 {% load static %}
 
-
 {% block content %}
 
+<style>
+/* Base styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: JetBrains Mono, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.helptext{
+    display: none;
+}
+
+ul{
+    text-align: center;
+    text-decoration: none;
+}
+
+li{
+    list-style-type: none;
+}
+
+.container {
+    text-align: center;
+    background-color: white;
+    width: 40%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 5% auto;
+    border-radius: 20px;
+    justify-content: center;
+    box-shadow: 1px 2px 5px black;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2vw;
+}
+
+label {
+    font-size: 1.2vw;
+    font-weight: bold;
+    margin: 10px 0;
+    display: block;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 80%;
+    font-family: JetBrains Mono, sans-serif;
+    border-radius: 30px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 10px auto;
+    font-size: 1vw;
+}
+
+input[type="submit"] {
+    width: 50%;
+    height: 50px;
+    border-radius: 30px;
+    background-color: black;
+    color: white;
+    font-size: 1.5vw;
+    font-family: JetBrains Mono, sans-serif;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #333;
+}
+
+.sign-up {
+    display: inline-block;
+    border: 1px solid grey;
+    border-radius: 30px;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    font-size: 1.5vw;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.sign-up:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.socials-bar {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.socials-bar img {
+    width: 40px;
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 80%;
+        margin-top: 10%;
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 5vw;
+    }
+
+    label {
+        font-size: 4vw;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        font-size: 3vw;
+        height: 40px;
+    }
+
+    input[type="submit"] {
+        font-size: 4vw;
+        height: 50px;
+        width: 70%;
+    }
+
+    .sign-up {
+        font-size: 4vw;
+        padding: 10px 15px;
+    }
+
+    .socials-bar img {
+        width: 30px;
+    }
+}
+
+/* Further adjustments for very small screens */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 6vw;
+    }
+
+    label {
+        font-size: 5vw;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        font-size: 4vw;
+        height: 35px;
+    }
+
+    input[type="submit"] {
+        font-size: 5vw;
+        height: 45px;
+    }
+
+    .sign-up {
+        font-size: 5vw;
+    }
+}
+</style>
 
 {% if page == 'login' %}
-<div>
+<div class="container">
     <form method="POST" action="">
         {% csrf_token %}
+        <h1>Login</h1>
 
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="Enter Your Username" required>
 
-        <label>Username:</label>
-        <input type="text" name="username" placeholder="Enter Your Username"> 
-
-
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Enter Your Password"> 
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Enter Your Password" required>
 
         <input type="submit" value="Login">
 
+        <p>Haven't signed up yet?</p>
+        <a class="sign-up" href="{% url 'register' %}">Sign Up</a>
     </form>
 
-    <p>Haven't signed up yet?</p>
-    <a href="{% url 'register' %}">Sign Up</a>
+    <div class="socials-bar">
+        <a href="#" class="instagram"><img src="{% static 'assets/svgs/icons8-instagram (1).svg' %}" alt="Instagram"></a>
+        <a href="#" class="tiktok"><img src="{% static 'assets/svgs/icons8-tiktok (1).svg' %}" alt="TikTok"></a>
+        <a href="#" class="twitter"><img src="{% static 'assets/svgs/icons8-x (1).svg' %}" alt="Twitter"></a>
+        <a href="#" class="youtube"><img src="{% static 'assets/svgs/icons8-youtube (1).svg' %}" alt="YouTube"></a>
+        <a href="#" class="linkedin"><img src="{% static 'assets/svgs/icons8-linkedin.svg' %}" alt="YouTube"></a>
+    </div>
 </div>
-
-
 {% else %}
-
-<div>
+<div class="container">
     <form method="POST" action="">
         {% csrf_token %}
+        <h1>Register</h1>
 
-        {{form.as_p}}
+        {{ form.as_p }}
 
         <input type="submit" value="Register">
 
+        <p>Have an account?</p>
+        <a class="sign-up" href="{% url 'login' %}">Log In</a>
     </form>
-    <p>Have an account?</p>
-    <a href="{% url 'login' %}">Log In</a>
-</div>
-{% endif %}
 
+    <div class="socials-bar">
+        <a href="#" class="instagram"><img src="{% static 'assets/svgs/icons8-instagram (1).svg' %}" alt="Instagram"></a>
+        <a href="#" class="tiktok"><img src="{% static 'assets/svgs/icons8-tiktok (1).svg' %}" alt="TikTok"></a>
+        <a href="#" class="twitter"><img src="{% static 'assets/svgs/icons8-x (1).svg' %}" alt="Twitter"></a>
+        <a href="#" class="youtube"><img src="{% static 'assets/svgs/icons8-youtube (1).svg' %}" alt="YouTube"></a>
+        <a href="#" class="linkedin"><img src="{% static 'assets/svgs/icons8-linkedin.svg' %}" alt="YouTube"></a>
+    </div>
+</div>
+
+{% endif %}
 
 {% endblock content %}

@@ -62,7 +62,7 @@
         <li>
           <div id="myAccountSidenav" class="accountSidenav">
             <a href="javascript:void(0)" class="closebtnAccount" onclick="closeAccountNav()">&times;</a>
-            <a href="{% url 'account' %}"  style="color: whitesmoke;">Profile</a>
+            <a href="{% url 'account' user.username %}"  style="color: whitesmoke;">Profile</a>
           
 
           </div>

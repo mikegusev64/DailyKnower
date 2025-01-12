@@ -35,7 +35,7 @@ class adminPost(models.Model):
         return self.name
     
 
-    
+ 
     
 class allReply(models.Model):
     user = models.ForeignKey(User, on_delete=CASCADE)

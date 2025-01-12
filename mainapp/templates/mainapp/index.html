@@ -6,7 +6,11 @@
     <div class="moto">
 
       <div class="todays_date_wrapper" style="display: flex; flex-direction: column; padding-bottom: 30px; ">
+        {% if user.is_authenticated %}
         <p>Welcome, {{request.user}}</p>
+        {% else %}
+        <a href="{% url 'register' %}" style="font-size: 0.7vw; text-align: center;">Welcome, <br> please create an account <br> to access full functionality.</a>
+        {% endif %}
           <span id="datetime"></span>
       
           <script>
@@ -28,9 +32,9 @@
       </div>
 
       <div class="moto-info">
-        <h5>Daily Learning</h5>
-        <h5>Uncensored Discussions</h5>
-        <h5>Simple.</h5>
+        <h5 style="margin-bottom: -5px;">Daily Learning.</h5>
+        <h5 style="margin-bottom: -5px;">Uncensored Discussions.</h5>
+        <h5 style="margin-bottom: -5px;">Simple.</h5>
       </div>
 
       <div class="feedback_button">
@@ -211,7 +215,7 @@
 
           
 
-          <div> 
+          <div style="height: 60px"> 
             <p class="preview-text" style="opacity: 0.5; font-size: 8px; text-align: center;"></p>
           </div>
 

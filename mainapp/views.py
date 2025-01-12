@@ -28,6 +28,7 @@ from . import models
 from django.contrib import admin
 from django.urls import path, include
 from mainapp import views
+from django.core.paginator import Paginator
 
 
 
@@ -98,6 +99,23 @@ def index(request):
                'users': users,
                }
     return render(request, "mainapp/index.html", context)
+
+
+
+def userFeed(request):
+    posts = adminPost.objects.all()
+    topics = topicTheme.objects.all()
+    latest_post = adminPost.objects.latest("created_at")
+    replies = latest_post.allreply_set.all().order_by("-created_on") if latest_post else []
+    repliers = latest_post.repliers.all() if latest_post else []
+    
+    context = {'posts': posts,
+               'topics': topics,
+               'latest_post': latest_post,
+               "replies": replies,
+               'repliers': repliers,
+               }
+    return render(request, "mainapp/userfeed.html", context)
 
 
 
@@ -200,9 +218,27 @@ def feedback(request):
 
 
 @login_required(login_url='login')
-def accountPage(request):
+def accountPage(request, username):
+    user = get_object_or_404(User, username=username)
+
+    user_replies = allReply.objects.filter(user=user)
+    topics = dkTopic.objects.all()
+    themes = topicTheme.objects.all()
+    user_replies_count = user_replies.count()
     
-    return render(request, "mainapp/account_page.html")
+    paginator = Paginator(user_replies, 5)  # Show 10 replies per page
+    page_number = request.GET.get('page')
+    user_replies = paginator.get_page(page_number)
+    
+    context = {'user': user,
+               'user_replies': user_replies,
+               'topics': topics,
+               'themes': themes,
+               'user_replies_count': user_replies_count,
+               }
+    
+    
+    return render(request, "mainapp/account_page.html", context)
 
 
 
@@ -484,3 +520,39 @@ def _update_record(webhook_event) -> None:
         checkout_record.save()
         print('✋ Subscription canceled: %s', data_object.id)
         
+
+@login_required(login_url='login')
+def user_feed(request):
+    q = request.GET.get("q")
+    posts = adminPost.objects.all()
+    topics = topicTheme.objects.all()
+    latest_post = adminPost.objects.latest("created_at") if adminPost.objects.exists() else None
+    replies = latest_post.allreply_set.all().order_by("-created_on") if latest_post else []
+    repliers = latest_post.repliers.all() if latest_post else []
+    
+    message_activity = allReply.objects.all
+    
+    reply_count = replies.count()
+    
+    if request.method == "POST" and latest_post:
+        reply = allReply.objects.create(
+            user = request.user,
+            post = latest_post,
+            body = request.POST.get("body"),
+        )
+        
+        latest_post.repliers.add(request.user)
+        return redirect('feed')
+    
+    
+    context = {'posts':posts,
+               'topics': topics,
+               'latest_post': latest_post,
+                "replies": replies,
+               'repliers': repliers,
+               'post': post,
+               'message_activity': message_activity,
+                'reply_count': reply_count,
+               }
+    
+    return render(request, 'mainapp/user_feed.html', context)

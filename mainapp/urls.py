@@ -20,13 +20,14 @@ urlpatterns = [
     path('save-note/', views.save_note, name="save_note"),
     path('get-notes/<int:topic_id>/', views.get_notes, name='get_notes'),
     path('delete-note/<int:note_id>/', views.delete_note, name='delete_note'),
-    path('account/', views.accountPage, name="account"),
+    path('account/<str:username>/', views.accountPage, name="account"),
     path('subscribe/', views.subscribe, name='subscribe'),
     path('cancel/', views.cancel, name='cancel'),
     path('success/', views.success, name='success'),
     path('create-checkout-session/', views.create_checkout_session, name='create-checkout-session'),
     path('direct-to-customer-portal/', views.direct_to_customer_portal, name='direct-to-customer-portal'),
     path('collect-stripe-webhook/', views.collect_stripe_webhook, name='collect-stripe-webhook'),
+    path('user-feed/', views.user_feed, name='user-feed'),
 
 
 ]
