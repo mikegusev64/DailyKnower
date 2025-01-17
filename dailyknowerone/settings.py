@@ -16,6 +16,8 @@ import os
 from dotenv import load_dotenv
 
 
+
+
 load_dotenv()
 
 
@@ -28,6 +30,7 @@ if not API_KEY:
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -142,3 +145,5 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+ACCOUNT_USERNAME_BLACKLIST= ['admin', 'accounts', 'profile', 'user', 'users', 'login', 'logout', 'register', 'feed', 'post', 'feedback', 'delete-reply', 'all-discussions', 'latest', 'fact-check', 'save-note', 'get-notes', 'delete-note', 'account', 'subscribe', 'cancel', 'success', 'create-checkout-session', 'direct-to-customer-portal', 'collect-stripe-webhook', 'user-feed', 'privacy-policy', 'update-user']

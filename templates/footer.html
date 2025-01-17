@@ -1,13 +1,33 @@
 {% load static %}
 
 
+<style>
+  footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+
+  }
+</style>
 <footer>
-   
+  <div class="footer-links">
+    <a href="/privacy-policy" style="color:black; margin-right: 15px;">Privacy Policy</a>
+    <a href="/terms-of-use" style="color: black; margin-right: 15px;">Terms of Use</a>
+    <a href="/contact" style="color: black; margin-right: 15px;">Contact</a>
+    <a href="/about-us" style="color: black;">About Us</a>
+  </div>
+  <div class="legal-info" style="margin-top: 10px;">
+    <p>© 2025 DailyKnower. All rights reserved.</p>
+    <p>"DailyKnower" is a trademark of Gusev Enterprise.</p>
+    <p>Powered by xAI Technology.</p>
+  </div>
   <div class="socials-bar" style="margin-bottom: 5%;">
-    <a href="https://www.instagram.com/misha_gus" class="instagram"><img src="{% static 'assets/svgs/icons8-instagram (1).svg' %}" alt="Instagram"></a>
-    <a href="#" class="tiktok"><img src="{% static 'assets/svgs/icons8-tiktok (1).svg' %}" alt="TikTok"></a>
-    <a href="https://x.com/mikhail_gus" class="twitter"><img src="{% static 'assets/svgs/icons8-x (1).svg' %}" alt="Twitter"></a>
-    <a href="https://www.youtube.com/@Mikhail-Gusev" class="youtube"><img src="{% static 'assets/svgs/icons8-youtube (1).svg' %}" alt="YouTube"></a>
-    <a href="https://www.linkedin.com/in/mikhail-gusev-83a152227/" class="linkedin"><img src="{% static 'assets/svgs/icons8-linkedin.svg' %}" alt="LinkedIn"></a>
+    <a href="https://www.instagram.com/misha_gus" target="_blank" rel="noopener noreferrer" class="instagram"><img src="{% static 'assets/svgs/icons8-instagram (1).svg' %}" alt="Instagram"></a>
+    <a href="#" target="_blank" rel="noopener noreferrer" class="tiktok"><img src="{% static 'assets/svgs/icons8-tiktok (1).svg' %}" alt="TikTok"></a>
+    <a href="https://x.com/mikhail_gus" target="_blank" rel="noopener noreferrer" class="twitter"><img src="{% static 'assets/svgs/icons8-x (1).svg' %}" alt="Twitter"></a>
+    <a href="https://www.youtube.com/@Mikhail-Gusev" target="_blank" rel="noopener noreferrer" class="youtube"><img src="{% static 'assets/svgs/icons8-youtube (1).svg' %}" alt="YouTube"></a>
+    <a href="https://www.linkedin.com/in/mikhail-gusev-83a152227/" target="_blank" rel="noopener noreferrer" class="linkedin"><img src="{% static 'assets/svgs/icons8-linkedin.svg' %}" alt="LinkedIn"></a>
 </div>
   </footer>

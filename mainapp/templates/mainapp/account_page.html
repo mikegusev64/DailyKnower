@@ -3,31 +3,205 @@
 {% block content %}
 
 <style>
-.page_wrapper_account {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
+    .page_wrapper_account {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
 
-h1{
-    text-align: center;
-}
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    .page_middle {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-left: 20px;
+    }
+    
+    .page_left {
+        display: flex;
+        flex-direction: row;
+        min-width: 40%;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      
+      
 
 
-.page_middle{
-    text-align: center;
-}
-</style>
+    }
+    </style>
 
 <h1> {{user.username}}'s Profile</h1>
 
 <div class="page_wrapper_account">
-
+   
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {% if request.user.username == user.username %}
     <div class="page_left">
+
+        <div class="resource_box_one">
+            <div class="box_title" style="background-color: rgb(247,208,43); border-top-left-radius: 20px; border-top-right-radius: 20px; font-size: 10px; justify-content: start;">
+               <h2>Articles</h2>
+  
+      
+            </div>
+            <p class="preview-text" style="opacity: 0.5; font-size: 8px; text-align: center;"></p>
+            <div style="height: 60px;">
+          
+            </div>
+  
+            <button popovertarget="myheader" popovertargetaction = "show" class="box-button-1" style="font-size: 10px;">open full</button>
+            
+  
+            <div popover id="myheader" class="my-header" style="width: 80%; height: 70%; text-align: center; border-radius: 40px;">
+      
+              <h1>Articles</h1>
+  
+  
+              <div class="popover-content-articles" style="display: flex; flex-wrap: wrap; max-width: 90%; margin-left: auto; margin-right: auto; background-color: rgb(220,220,220); padding: 15px; border-radius: 20px;  box-shadow: 2px 2px 7px grey; gap: 10px; justify-content: space-evenly; margin-top: 20px; margin-bottom: 20px; min-height: 100px; border: 1px solid black;">
+  
+                
+              </div>
+  
+  
+              {% if user.is_authenticated %}
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; content: none;">
+  
+               
+                
+                <hr style="width: 100%; height: 2px; background-color: black;">
+                <input type="hidden" id="note-dkTopic-articles" value="1">
+                <h1 style="background-color: rgb(247,207,44); width: 70%; margin-bottom: 0px; border-top-left-radius: 20px; border-top-right-radius: 20px;   box-shadow: 2px 2px 7px grey; padding: 10px 0px 10px 0px;">Your Notes</h1>
+                <div id="notes-display-articles">
+  
+  
+  
+                </div>
+              </div>
+  
+              {% else %}
+  
+              <h5>Please <a href="{% url 'register' %}">create an account</a> or <a href="{% url 'login' %}">login to an existing account</a> to make and save notes.</h5>
+  
+              {% endif %}
+            </div>
+  
+          </div>
+
+
+        <div class="resource_box_two">
+            <div class="box_title" style="background-color: rgb(247,208,43); border-top-left-radius: 20px; border-top-right-radius: 20px; font-size: 10px; justify-content: start;">
+               <h2>Videos</h2>
+            </div>
+  
+  
+            <div style="height: 60px;">
+              <p class="preview-text" style="opacity: 0.5; font-size: 8px; text-align: center;"></p>
+            </div>
+  
+  
+            <button popovertarget="myheader2" popovertargetaction = "show" class="box-button-2" style="font-size: 10px;">open full</button>
+  
+            <div popover id="myheader2" style="width: 80%; height: 70%; text-align: center; border-radius: 40px; align-items: center;">
+  
+              <h1>Videos</h1>
+  
+              <div class="popover-content-video" style="display: flex; flex-wrap: wrap; max-width: 90%; margin-left: auto; margin-right: auto; background-color: rgb(220,220,220); padding: 15px; border-radius: 20px;  box-shadow: 2px 2px 7px grey; gap: 10px; justify-content: space-evenly; margin-top: 20px; margin-bottom: 20px; min-height: 100px; border: 1px solid black;">
+  
+              <iframe width="420" height="250" src="https://www.youtube.com/embed/r_3yOQl9E4I?si=HXBMLDagQd9zdA9R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <iframe width="420" height="250" src="https://www.youtube.com/embed/Sa5hqvvJmFQ?si=nSBbyg7bDZOVeS23" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <iframe width="420" height="250" src="https://www.youtube.com/embed/Sa5hqvvJmFQ?si=nSBbyg7bDZOVeS23" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+              {% if user.is_authenticated %}
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                  
+                  <hr style="width: 100%; height: 2px; background-color: black;">
+                  <input type="hidden" id="note-dkTopic-videos" value="2">
+                  <h1 style="background-color: rgb(247,207,44); width: 70%; margin-bottom: 0px; border-top-left-radius: 20px; border-top-right-radius: 20px;   box-shadow: 2px 2px 7px grey; padding: 10px 0px 10px 0px;">Your Notes</h1>
+                  <div id="notes-display-videos">
+                   
+                    
+                   
+                    
+                  </div>
+                  
+                </div>
+                {% else %}
+  
+              <h5>Please <a href="{% url 'register' %}">create an account</a> or <a href="{% url 'login' %}">login to an existing account</a> to make and save notes.</h5>
+  
+              {% endif %}
+            </div>
+            
+          </div>
+
+
+
+          <div class="resource_box_three">
+            <div class="box_title" style="background-color: rgb(247,208,43); border-top-left-radius: 20px; border-top-right-radius: 20px; font-size: 10px; justify-content: start;">
+               <h2>Other...</h2>
+            </div>
+  
+            
+  
+            <div style="height: 60px"> 
+              <p class="preview-text" style="opacity: 0.5; font-size: 8px; text-align: center;"></p>
+            </div>
+  
+  
+            <button popovertarget="myheader3" popovertargetaction = "show" class="box-button-3" style="font-size: 10px;">open full</button>
+            
+  
+  
+            <div popover id="myheader3" style="width: 80%; height: 70%; text-align: center; border-radius: 40px;">
+  
+              <h1>Other Resources</h1>
+  
+  
+              <div class="popover-content-other" style="display: flex; flex-wrap: wrap; max-width: 90%; margin-left: auto; margin-right: auto; background-color: rgb(220,220,220); padding: 15px; border-radius: 20px;  box-shadow: 2px 2px 7px grey; gap: 10px; justify-content: space-evenly; margin-top: 20px; margin-bottom: 20px; min-height: 100px; border: 1px solid black;">
+  
+                
+              </div>
+  
+              {% if user.is_authenticated %}
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+               
+                <hr style="width: 100%; height: 2px; background-color: black;">
+                <input type="hidden" id="note-dkTopic-other" value="3">
+                <h1 style="background-color: rgb(247,207,44); width: 70%; margin-bottom: 0px; border-top-left-radius: 20px; border-top-right-radius: 20px;   box-shadow: 2px 2px 7px grey; padding: 10px 0px 10px 0px;">Your Notes</h1>
+                <div id="notes-display-other">
+                  
+  
+                  
+                </div>
+                </div>
+                {% else %}
+  
+                <h5>Please <a href="{% url 'register' %}">create an account</a> or <a href="{% url 'login' %}">login to an existing account</a> to make and save notes.</h5>
+    
+                {% endif %}
+          </div>
+  
+          
+  
+          </div>
+
+
+
+
 
     </div>
 
+    {% endif %}
 
   <div class="page_middle">
     <div class="profile-info">
@@ -35,6 +209,8 @@ h1{
 
       {% if request.user.username == user.username %}
       <a href="{% url 'logout' %}"><h4>logout</h4></a>
+      <a href="{% url 'update-user' %}">Update user information</a>
+
         {% endif %}
     </div>
 
@@ -56,7 +232,7 @@ h1{
 
       <h3>Comments Made by {{ user.username }}</h3>
       <small>{{user_replies_count}} Comments</small>
-      <hr style="max-width: 800px; min-width: 800px" />
+      <hr style="max-width: 100%; min-width: 100%" />
       <div>
         {% if user_replies %} {% for reply in user_replies %}
         <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px">
@@ -104,9 +280,7 @@ h1{
 
   </div>
 
-  <div class="page-right">
 
-  </div>
 </div>
 
 

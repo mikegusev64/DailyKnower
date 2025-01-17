@@ -29,6 +29,9 @@ from django.contrib import admin
 from django.urls import path, include
 from mainapp import views
 from django.core.paginator import Paginator
+from .forms import UserForm
+
+
 
 
 
@@ -97,6 +100,7 @@ def index(request):
                'topics': topics,
                'latest_post': latest_post,
                'users': users,
+            
                }
     return render(request, "mainapp/index.html", context)
 
@@ -231,6 +235,7 @@ def accountPage(request, username):
     user_replies = paginator.get_page(page_number)
     
     context = {'user': user,
+               
                'user_replies': user_replies,
                'topics': topics,
                'themes': themes,
@@ -556,3 +561,19 @@ def user_feed(request):
                }
     
     return render(request, 'mainapp/user_feed.html', context)
+
+def privacy_policy(request):
+    return render(request, 'mainapp/privacypolicy.html')
+
+
+@login_required(login_url='login')
+def updateUser(request):
+    user = request.user
+    form = UserForm(instance=user)
+    
+    if request.method == "POST":
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('account', username=user.username)
+    return render (request, 'mainapp/update-user.html', {'form': form})

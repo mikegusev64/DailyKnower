@@ -188,8 +188,13 @@ input[type="submit"]:hover {
 
         <input type="submit" value="Login">
 
+        <p>Forgot Your Password?</p>
+        <p style="margin-bottom: 10%;">Send us an email <a href="mailto:mikhail@mgvmedia.net">here</a></p>
+
         <p>Haven't signed up yet?</p>
         <a class="sign-up" href="{% url 'register' %}">Sign Up</a>
+
+
     </form>
 
     <div class="socials-bar">
@@ -206,6 +211,8 @@ input[type="submit"]:hover {
         {% csrf_token %}
         <h1>Register</h1>
 
+
+   
         {{ form.as_p }}
 
         <input type="submit" value="Register">

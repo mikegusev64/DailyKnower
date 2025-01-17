@@ -38,9 +38,23 @@
       display: none;
     }
     
-    .return-to-today{
-      display: none;
+    .return-to-today a{
+          font-family: JetBrains Mono;
+          font-size: 20px;
+          border-radius: 20px;
+        
+          padding-left: 10%;
+          padding-right: 10%;
+          text-align: center;
+          line-height: 40px;
+          background-color: black;
+          color: white;
+          text-decoration: none;
+          opacity: 0.9;
+          
      }
+
+     
 
   
 
@@ -163,7 +177,7 @@
       </div>
       
       <div class="return-to-today" style="display: flex; justify-content: center; align-items: center; margin-top: 3%; width: 80%;">
-        <a href="{% url 'feed' %}">Back To Today</a>
+        <a href="{% url 'feed' %}">Back To Feed</a>
       </div>
       
         <h2>{{post.created}}</h2>
@@ -254,7 +268,7 @@
         {% endfor %}
     
       </div>
-      <div class="search-by-topic-wrapper">
+      <div class="search-by-topic-wrapper" style="margin-bottom: 4%;">
       <div class="search-by-topic" style="display:flex; flex-direction: column; align-items: center;">
         <h3 style="text-align: center;">Search Conversations <br>by Topic:</h3>
 

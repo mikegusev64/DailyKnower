@@ -48,6 +48,8 @@ img {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 
 .moto-info {
@@ -72,6 +74,8 @@ p{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 .title_info {
   font-weight: 800;
@@ -554,19 +558,27 @@ p{
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 22%;
+  color: white;
+  font-size: 20px;
+
+  
  
 }
 
-.accountSidenav a {
+.accountSidenav a, small {
+
+  flex-wrap: wrap;
   padding-left: 70px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
   color: #818181;
-  display: block;
+  display: flex;
   transition: 0.3s;
-  white-space: nowrap; 
+  white-space: fixed; 
   overflow: hidden;
   padding-bottom: 10px;
+
+
 }
 
 .accountSidenav a:hover {

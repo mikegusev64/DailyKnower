@@ -3,6 +3,8 @@ from . import views
 from django.contrib import admin
 from django.urls import path, include
 from mainapp import views
+from django.urls import path
+
 
 
 urlpatterns = [
@@ -28,6 +30,8 @@ urlpatterns = [
     path('direct-to-customer-portal/', views.direct_to_customer_portal, name='direct-to-customer-portal'),
     path('collect-stripe-webhook/', views.collect_stripe_webhook, name='collect-stripe-webhook'),
     path('user-feed/', views.user_feed, name='user-feed'),
+    path('privacy-policy/', views.privacy_policy, name='privacy-policy'),
+     path('update-user/', views.updateUser, name='update-user'),
 
 
 ]

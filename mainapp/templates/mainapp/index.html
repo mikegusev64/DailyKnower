@@ -3,6 +3,110 @@
 
 {% block content %}
 
+
+<style>
+   /* Responsive Styles */
+   @media screen and (max-width: 768px) {
+    .moto-info h5 {
+      font-size: 14px;
+    }
+
+    .feedback_button button {
+      font-size: 14px;
+    }
+
+    .daily_title h1 {
+      font-size: 3rem;
+    }
+
+    .latest-post {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .resources_wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .resource_box_one,
+    .resource_box_two,
+    .resource_box_three {
+      flex: 1 1 100%;
+      margin: 10px 0;
+      margin-left: 10px;
+    }
+
+    .resource_box_one button,
+    .resource_box_two button,
+    .resource_box_three button {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .moto-info h5 {
+      font-size: 12px;
+    }
+
+    .feedback_button button {
+      font-size: 10px;
+      padding: 8px 16px;
+    }
+
+    .daily_title h1 {
+      font-size: 1.2rem;
+    }
+
+    .latest-post {
+      font-size: 12px;
+    }
+
+    .resource_box_one h2,
+    .resource_box_two h2,
+    .resource_box_three h2{
+  font-size: 9px;
+    }
+
+    .resource_box_one button,
+    .resource_box_two button,
+    .resource_box_three button {
+      font-size: 10px;
+    }
+
+    .find_friends{
+    display: none;
+
+  }
+
+  .feedback_button{
+    max-width: 30%;
+  }
+
+  .discussion{
+    font-size: 10px;
+  }
+ 
+  #datetime{
+    display: none;
+  }
+
+  .box_title{
+    font-size: 7px;
+  }
+
+  .discussion_button_wrapper button{
+    margin-bottom: 20px;
+  }
+
+  .footer{
+    text-align: center;
+  }
+}
+
+
+</style>
+
     <div class="moto">
 
       <div class="todays_date_wrapper" style="display: flex; flex-direction: column; padding-bottom: 30px; ">
@@ -31,11 +135,18 @@
           </script>
       </div>
 
-      <div class="moto-info">
+      <button popovertarget="motopopover" popovertargetaction = "show" style="border: none; font-family: JetBrains Mono; cursor: pointer; background-color: transparent;">
+      <div class="moto-info" style="text-decoration: underline;">
         <h5 style="margin-bottom: -5px;">Daily Learning.</h5>
         <h5 style="margin-bottom: -5px;">Uncensored Discussions.</h5>
-        <h5 style="margin-bottom: -5px;">Simple.</h5>
+        <h5 style="margin-bottom: -5px;">Simple Layout.</h5>
       </div>
+    </button>
+    <div popover id="motopopover" style="width: 80%; height: 70%; text-align: center; border-radius: 40px; padding-left: 20%; padding-left: 20%;">
+      <h1>What is DailyKnower?</h1>
+      <p style="font-size: 20px;">We aim to give everyone a voice. Specifically those who have previously been afraid to use theirs. DailyKnower stands behind every persons right to an opinion and aims to fight the ongoing battle for free-speech. Whilst living in times on increased censorship, we aim to educate and provide unbiased resources for both; historical events, as well as events happening right in front of us. With platforms such as X revolutionizing media and the way people source their news, we at DailyKnower aim to play our part in ensuring you have a space to learn and express your opinions. As trust in legacy media is slowly being lost, your voice and opinions becomes more and more valuable... So use it. </p>
+      <p style="font-size: 20px;">DailyKnower is a fully anonymous platform, so all that is required of you is to think of a username and password for the sake of storing your notes within your "account".</p>
+    </div>
 
       <div class="feedback_button">
         <form class="button_wrapper" action="https://vpr5kye39t3.typeform.com/to/EKUmdvr1" target="_blank">
@@ -87,11 +198,11 @@
       </div>
       <div class="find_friends">
         <p>Scroll here and <br> find your friends</p>
-        <div class="find_friends_info" style="overflow-y: scroll; border-radius: 20px;">
+        <div class="find_friends_info" style="overflow-y: scroll; border-radius: 20px; max-width: 100%;">
             
-          {% for user in users %}
-          <ul>
-            <a href=""> <li><h3>{{user}}</h3></li></a>
+          {% for user in users reversed %}
+          <ul style="margin-top: 0;">
+            <a href="{% url 'account' user.username%}"> <li><h3>{{user}}</h3></li></a>
             {% endfor %}
           </ul>
 
@@ -263,9 +374,11 @@
         </div>
 
     <form action="{% url 'feed' %}" class="discussion_button_wrapper">
-      <button type="submit" class="discussion" style="font-size: 20px;">I'm ready to discuss</button>
+      <button type="submit" class="discussion" style="font-size: 19px;">I'm ready to discuss</button>
     </form>
 
+
+    {% include 'footer.html' %}
 
 
  
