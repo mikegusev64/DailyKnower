@@ -41,8 +41,9 @@ SECRET_KEY = 'django-insecure-envgd6n$@2k1^!#=f6$c*a4*%2np(=(!t%y)j037$f1(lf2gxa
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ALLOWED_HOSTS = []  # Allow all hosts for development
+STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -59,7 +60,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -146,4 +146,3 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-ACCOUNT_USERNAME_BLACKLIST= ['admin', 'accounts', 'profile', 'user', 'users', 'login', 'logout', 'register', 'feed', 'post', 'feedback', 'delete-reply', 'all-discussions', 'latest', 'fact-check', 'save-note', 'get-notes', 'delete-note', 'account', 'subscribe', 'cancel', 'success', 'create-checkout-session', 'direct-to-customer-portal', 'collect-stripe-webhook', 'user-feed', 'privacy-policy', 'update-user']
