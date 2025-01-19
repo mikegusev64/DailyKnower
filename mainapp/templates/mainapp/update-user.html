@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 
-
 <main class="update-account layout">
   <div class="container">
     <div class="layout__box">
@@ -11,9 +10,7 @@
           <a href="{% url 'index' %}">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <title>arrow-left</title>
-              <path
-                d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z">
-              </path>
+              <path d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"></path>
             </svg>
           </a>
           <h3>Edit your profile</h3>
@@ -22,26 +19,103 @@
       <div class="layout__body">
         <form class="form" action="" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
-
           {% for field in form %}
           <div class="form__group">
-            <label for="profile_pic">{{field.label}}</label>
-            {{field}}
+            <label style="font-family: JetBrains Mono;" for="profile_pic">{{field.label}}</label>
+            <div style="font-family: JetBrains Mono;">{{field}}</div>
           </div>
           {% endfor %}
-
-
           <div class="form__action">
-            <a class="btn btn--dark" href="index.html">Cancel</a>
-            <button class="btn btn--main" type="submit">Update</button>
+            <a class="btn btn--dark" href="{% url 'index' %}">Cancel</a>
+            <button class="btn btn--main" style="font-family: JetBrains Mono;" type="submit">Update</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  </div>
 </main>
+
+<style>
+  .update-account .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .layout__box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .layout__boxHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .layout__boxTitle h3 {
+    margin: 0;
+  }
+
+  .form__group {
+    margin-bottom: 15px;
+  }
+
+  .form__group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .form__action {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .btn--dark {
+    background: #333;
+  }
+
+  .btn--main {
+    background: #007bff;
+  }
+
+  @media (max-width: 600px) {
+    .layout__boxHeader {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .btn--dark{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .form__action {
+      flex-direction: column;
+    }
+
+    .form__action .btn--dark .btn--main {
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    .form__action .btn:last-child {
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
 {% endblock content %}
-
-
-

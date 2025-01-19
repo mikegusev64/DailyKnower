@@ -29,7 +29,32 @@
           .responsive-title {
               font-size: 12px;
           }
+
+
+          .comment-section-headers {
+        
+     
+          }
+
       }
+
+      @media screen and (min-width: 700px) {
+        .comment-section-headers {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          text-align: center;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .comment-delete{
+          font-size: 10px;
+        }
+
+
+      }
+
     .mobile-buttons {
       display: none;
   }
@@ -69,7 +94,7 @@
       
       .mobile-buttons {
           position: sticky;
-          top: 3em;
+          top: 3.5em;
           display: flex;
           justify-content: space-around;
           width: 100%;
@@ -159,9 +184,9 @@
             {% for post in posts reversed %}
           <ul>
             <li><h5><a href="{% url 'post' post.id %}">{{post.name|truncatewords:15}}</a></h5>
-                <small><strong>{{post.dkTopic}}</strong></small> <br>
-                <small>{{post.created}}</small>
-                <small>in <a href="">{{post.dkTopic.topicTheme}}</a></small></li> 
+                <p><strong>{{post.dkTopic}}</strong></p> <br>
+                <p>{{post.created}}</p>
+                <p>in <a href="">{{post.dkTopic.topicTheme}}</a></p></li> 
            
                 {% endfor %}    
           </ul>
@@ -189,7 +214,7 @@
           <h2>Fact Checker</h2>
           <textarea id="query-input" placeholder="Type your question here..." style="display: flex; width: 90%; border-radius: 20px; padding-top: 20px; padding-left: 10px;"></textarea>
           <div class="button_and_powered" style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
-            <small><p>Powered by xAi</p></small>
+          <p>Powered by xAi</p>
             <p id="loading-message" style="display: none; color: black; font-size: 11px;">Generating response...</p>
             <button id="fact-check-button" style="font-family: JetBrains Mono; border-radius: 20px; height: 30px; width: 80px;">Check</button>
           </div>
@@ -215,7 +240,7 @@
         <div class="comment-section" style="width: 100%; margin-top: 15px; position: sticky; top:0;">
           <form style="display: flex; justify-content:center; margin-bottom: 10px;" method="POST" action="">
             {% csrf_token %}
-            <input style="font-family: JetBrains Mono; width: 90%; height: 40px; border-radius: 20px; box-shadow: 0px 0px 3px grey inset; border: 2px solid black; padding-left: 10px;" type="text" name="body" placeholder="Leave your comments...">
+            <input style="font-family: JetBrains Mono; width: 90%; height: 40px; border-radius: 20px; box-shadow: 0px 0px 3px grey inset; border: 2px solid black; padding-left: 10px; margin-top: 5px;" type="text" name="body" placeholder="Leave your comments...">
           </form>
     
         </div>
@@ -223,17 +248,19 @@
 
         <div class="chat-body" style="max-width: 80%; min-width: 60%; border: 1px solid black; margin-top: 10px; border-radius: 20px; padding: 10px; text-align: center; margin-bottom: 20px; margin-left: 4%; margin-right: 4%;">
           <h3>Conversation</h3>
-          <small>{{reply_count}} Comments</small>
+          <p>{{reply_count}} Comments</p>
           <hr style="max-width: 100%; min-width: 100%;">
           
         {% for reply in replies %}
         <div>
+          <div class="comment-section-headers">
           {% if request.user == reply.user %}
-          <a href="{% url 'delete-reply' reply.id %}">Delete</a>
+          <a href="{% url 'delete-reply' reply.id %}" class="comment-delete" style="background-color: rgb(220,220,220); border-radius: 20px; border: 2px solid black; padding: 3px; text-decoration: none; font-weight: bold;">Delete</a>
          {% endif %}
-          <small>
+          <p style="font-size: 13px;">
             @{{reply.user}} {{reply.created_on|timesince}} ago <br>
-          </small>
+          </p>
+        </div>
           
           <p>{{reply.body}}</p>
           <hr>
@@ -256,9 +283,9 @@
         <hr>
         <div>
           
-         <small style="display: flex; justify-content: center;">@{{message.user}}  {{message.created_on|timesince}} ago</small> <br>
-         <small style="display: flex; justify-content: center; text-align: center; flex-direction: column;">commented in <a href="{% url 'post' message.post.id %}">"{{message.post|truncatewords:20}}"</a></small>
-         <small style="display: flex; justify-content: center; text-align: center; background-color: rgb(198, 198, 198); border-radius: 10px; padding: 5px; margin-top: 5px;"><a href="{% url 'post' message.post.id%}">{{message.body|truncatewords:20}}</a></small>
+         <p style="display: flex; justify-content: center;">@{{message.user}}  {{message.created_on|timesince}} ago</p> <br>
+         <p style="display: flex; justify-content: center; text-align: center; flex-direction: column;">commented in <a href="{% url 'post' message.post.id %}">"{{message.post|truncatewords:20}}"</a></p>
+         <p style="display: flex; justify-content: center; text-align: center; background-color: rgb(198, 198, 198); border-radius: 10px; padding: 5px; margin-top: 5px;"><a href="{% url 'post' message.post.id%}">{{message.body|truncatewords:20}}</a></p>
          {% if request.user == message.user %}
     
          <a style="font-size: 9px;" href="{% url 'delete-reply' message.id %}">Delete</a>
